@@ -4,8 +4,8 @@ import {Redirect, Route} from "react-router-dom"
 import {getUserData} from "../../state/ducks/user/actions"
 import {RootState} from "../../state/store";
 
-const DefaultRoute:FC<any> = ({ component: Component, ...rest }) => {
-  const isAuthentificated = useSelector((state:RootState) => !!state.user.token)
+const DefaultRoute: FC<any> = ({component: Component, ...rest}) => {
+  const isAuthentificated = useSelector((state: RootState) => !!state.user.token)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -13,8 +13,8 @@ const DefaultRoute:FC<any> = ({ component: Component, ...rest }) => {
   })
   return (
     <Route{...rest} render={props => props.location.pathname === '/index.html' ?
-        (<Redirect to={{pathname: "/"}}/>) :
-        (<Component {...props} />)}
+      (<Redirect to={{pathname: '/'}}/>) :
+      (<Component {...props} />)}
     />
   )
 }
