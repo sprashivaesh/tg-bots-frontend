@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.table th, .table td {
+  white-space: pre;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+label {
+  margin-bottom: 0;
+}
