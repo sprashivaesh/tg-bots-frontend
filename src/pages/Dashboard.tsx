@@ -1,12 +1,11 @@
-import React  from "react";
-import {Link} from "react-router-dom";
+import React from "react"
+import {Link} from "react-router-dom"
+import bg from '../assets/images/city-profile.jpg'
 
-
-const Dashboard = props => {
-  document.title = "Панель управления";
+const Dashboard = () => {
   return (
     <>
-      <div className="page-header header-filter" style={{backgroundImage: 'url(/images/city-profile.jpg)', maxHeight: '300px'}}></div>
+      <div className="page-header header-filter" style={{backgroundImage: `url("${bg}")`, maxHeight: '300px'}}></div>
       <div className="main">
         <div className="container">
           <div className="section text-center">
@@ -26,7 +25,7 @@ const Dashboard = props => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
