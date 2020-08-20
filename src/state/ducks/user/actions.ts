@@ -1,12 +1,5 @@
 import {userApi} from "./api";
-import {LoginForm, Provider, SignUpForm} from "./types";
-import {InferActionsTypes, RootState} from "../../store";
-import {ThunkAction} from "redux-thunk";
-
-
-export type ActionsTypes = InferActionsTypes<typeof actions>
-type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
-
+import {LoginForm, Provider, SignUpForm, ThunkAT} from "./types";
 
 export const actions = {
   loginRequest: () => ({type: 'tg-bots/user/LOGIN_REQUEST'} as const),

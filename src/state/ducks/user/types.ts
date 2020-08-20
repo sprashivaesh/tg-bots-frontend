@@ -1,5 +1,8 @@
-export type Provider = 'google'
+import {ThunkAction} from "redux-thunk";
+import {InferActionsTypes, RootState} from "../../store";
+import {actions} from "./actions";
 
+export type Provider = 'google'
 
 export type User = {
     id: number
@@ -26,3 +29,10 @@ export type SignUpForm = {
     email: string
     password: string
 }
+
+
+
+
+
+export type ActionsTypes = InferActionsTypes<typeof actions>
+export type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
