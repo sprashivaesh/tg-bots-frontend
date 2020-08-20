@@ -1,3 +1,4 @@
-export const GET_BOTS_REQUEST = "bot/GET_BOTS_REQUEST";
-export const GET_BOTS_SUCCESS = "bot/GET_BOTS_SUCCESS";
-export const GET_BOTS_FAILURE = "bot/GET_BOTS_FAILURE";
+
+export type Bot = {
+  id: number
+}
