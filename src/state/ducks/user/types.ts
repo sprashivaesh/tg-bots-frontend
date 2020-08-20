@@ -31,8 +31,5 @@ export type SignUpForm = {
 }
 
 
-
-
-
 export type ActionsTypes = InferActionsTypes<typeof actions>
 export type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
