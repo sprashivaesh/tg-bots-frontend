@@ -1,16 +1,14 @@
 import api from "../../utils/api"
 import {LoginForm, Provider, SignUpForm, User} from "./types";
 
-// const REGISTER = '/auth/local/register'
-// const EMAIL_CONFIRMATION = '/auth/email-confirmation'
-// const SEND_EMAIL_CONFIRMATION = '/auth/send-email-confirmation'
 const LOGIN = '/auth'
 const SIGN_UP = '/auth/local/register'
 const ME = '/users/me'
+// const EMAIL_CONFIRMATION = '/auth/email-confirmation'
+// const SEND_EMAIL_CONFIRMATION = '/auth/send-email-confirmation'
 // const UPDATE_ME = '/users/updateMe'
 // const FORGOT_PASSWORD = '/auth/forgot-password'
 // const RESET_PASSWORD = '/auth/reset-password'
-
 
 
 type LoginResponse = {

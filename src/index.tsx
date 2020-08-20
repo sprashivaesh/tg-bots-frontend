@@ -4,8 +4,8 @@ import {Provider} from "react-redux";
 import {BrowserRouter, withRouter, useLocation} from "react-router-dom";
 import store from "./state/store";
 
-// import Navbar from "./components/Navbar";
-// import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 import App from "./routes";
 import * as serviceWorker from './serviceWorker';
@@ -27,9 +27,9 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <ScrollToTop>
-        {/*<Navbar />*/}
+        <Navbar />
         <App/>
-        {/*<Footer />*/}
+        <Footer />
       </ScrollToTop>
     </BrowserRouter>
   </Provider>,
