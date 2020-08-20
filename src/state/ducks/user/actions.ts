@@ -1,21 +1,20 @@
 import {userApi} from "./api";
-import * as types from "./types";
 import {LoginForm, Provider, SignUpForm} from "./types";
-import {RootState} from "../../store";
+import {InferActionsTypes, RootState} from "../../store";
 import {ThunkAction} from "redux-thunk";
 
 
-type ActionsTypes = any
+export type ActionsTypes = InferActionsTypes<typeof actions>
 type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 
 
 export const actions = {
-  loginRequest: () => ({type: 'user/LOGIN_REQUEST'}),
-  loginSuccess: (data: any) => ({type: 'user/LOGIN_SUCCESS', payload: {...data}}),
-  meSuccess: (data: any) => ({type: types.ME_SUCCESS, payload: {...data}}),
-  signUpRequest: () => ({type: types.SIGN_UP_REQUEST}),
-  signUpSuccess: () => ({type: types.SIGN_UP_REQUEST}),
-  logout: () => ({type: types.LOGOUT}),
+  loginRequest: () => ({type: 'tg-bots/user/LOGIN_REQUEST'} as const),
+  loginSuccess: (data: any) => ({type: 'tg-bots/user/LOGIN_SUCCESS', payload: {...data}} as const),
+  meSuccess: (data: any) => ({type: 'tg-bots/user/ME_SUCCESS', payload: {...data}} as const),
+  signUpRequest: () => ({type: 'tg-bots/user/SIGN_UP_REQUEST'} as const),
+  logout: () => ({type: 'tg-bots/user/LOGOUT'} as const),
+  signUpFailure: (errors: Array<string>) => ({type: 'user/SIGN_UP_FAILURE', errors} as const)
 }
 
 export const loginWith = (form: LoginForm, provider?: Provider): ThunkAT => async (dispatch) => {
@@ -77,7 +76,7 @@ export const signUp = (form: SignUpForm): ThunkAT => async (dispatch) => {
           errors.push('Ошибка регистрации')
       }
     }
-    dispatch({type: types.SIGN_UP_FAILURE, errors})
+    dispatch(actions.signUpFailure(errors))
   }
 }
 export const logout = (): ThunkAT => async (dispatch) => {

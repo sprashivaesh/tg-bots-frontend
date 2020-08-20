@@ -1,13 +1,5 @@
-import {
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGOUT,
-  ME_SUCCESS,
-  SIGN_UP_FAILURE,
-  SIGN_UP_REQUEST, User,
-  // SIGN_UP_SUCCESS
-} from "./types";
+import {User} from "./types";
+import {ActionsTypes} from "./actions";
 
 type InitialState = {
   user: null | User
@@ -25,20 +17,18 @@ const initialState: InitialState = {
   errors: []
 };
 
-const signInReducer = (state = initialState, action: any): InitialState => {
-  const { errors, payload } = action;
+const signInReducer = (state = initialState, action: ActionsTypes): InitialState => {
   switch (action.type) {
-    case SIGN_UP_REQUEST: return {...state, loading: true, loaded: false, errors: []};
-    // case SIGN_UP_SUCCESS: return {...state, loading: false, loaded: true, token: payload.jwt};
-    case SIGN_UP_FAILURE: return {...state, loading: false, loaded: false, errors};
+    case "tg-bots/user/SIGN_UP_REQUEST": return {...state, loading: true, loaded: false, errors: []}
+    case "user/SIGN_UP_FAILURE": return {...state, loading: false, loaded: false, errors: action.errors}
 
-    case LOGIN_REQUEST: return {...state, loading: true, loaded: false, errors: []};
-    case LOGIN_SUCCESS: return {...state, loading: false, loaded: true, token: payload.jwt};
-    case LOGIN_FAILURE: return {...state, loading: false, loaded: false, errors};
+    case 'tg-bots/user/LOGIN_REQUEST': return {...state, loading: true, loaded: false, errors: []};
+    case 'tg-bots/user/LOGIN_SUCCESS': return {...state, loading: false, loaded: true, token: action.payload.jwt};
+    // case 'tg-bots/user/LOGIN_FAILURE': return {...state, loading: false, loaded: false, errors};
 
-    case ME_SUCCESS: return {...state, loading: false, loaded: true, user: payload};
+    case 'tg-bots/user/ME_SUCCESS': return {...state, loading: false, loaded: true, user: action.payload};
 
-    case LOGOUT: return {...state, user: null, token: ''};
+    case 'tg-bots/user/LOGOUT': return {...state, user: null, token: ''};
     default: return state;
   }
 }

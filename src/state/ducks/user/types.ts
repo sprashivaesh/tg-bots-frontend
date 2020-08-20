@@ -1,17 +1,3 @@
-export const LOGIN_REQUEST = "user/LOGIN_REQUEST";
-export const LOGIN_SUCCESS = "user/LOGIN_SUCCESS";
-export const LOGIN_FAILURE = "user/LOGIN_FAILURE";
-
-export const ME_SUCCESS = "user/ME_SUCCESS";
-
-export const SIGN_UP_REQUEST = "user/SIGN_UP_REQUEST";
-export const SIGN_UP_SUCCESS = "user/SIGN_UP_SUCCESS";
-export const SIGN_UP_FAILURE = "user/SIGN_UP_FAILURE";
-
-export const LOGOUT = "user/LOGOUT";
-
-
-
 export type Provider = 'google'
 
 
