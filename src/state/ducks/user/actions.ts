@@ -1,5 +1,7 @@
 import {userApi} from "./api";
-import {LoginForm, Provider, SignUpForm, ThunkAT} from "./types";
+import {LoginForm, Provider, SignUpForm} from "./types";
+import {ThunkAction} from "redux-thunk";
+import {InferActionsTypes, RootState} from "../../store";
 
 export const actions = {
   loginRequest: () => ({type: 'tg-bots/user/LOGIN_REQUEST'} as const),
@@ -9,6 +11,9 @@ export const actions = {
   logout: () => ({type: 'tg-bots/user/LOGOUT'} as const),
   signUpFailure: (errors: Array<string>) => ({type: 'user/SIGN_UP_FAILURE', errors} as const)
 }
+
+export type ActionsTypes = InferActionsTypes<typeof actions>
+type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 
 export const loginWith = (form: LoginForm, provider?: Provider): ThunkAT => async (dispatch) => {
   dispatch(actions.loginRequest())
