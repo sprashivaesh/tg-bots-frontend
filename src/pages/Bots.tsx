@@ -1,22 +1,24 @@
-import React, { Fragment, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom'
-import {getBots} from "../state/ducks/bots/actions";
-import Table from "../components/Table";
+import React, {useEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {Link} from 'react-router-dom'
+import {getBots} from "../state/ducks/bots/actions"
+import Table from "../components/Table"
+import {RootState} from "../state/store"
+import bg from '../assets/images/city-profile.jpg'
 
-const Dashboard = props => {
-  document.title = "Боты";
-  const bots = useSelector(state => state.bots.bots);
+const Dashboard = () => {
+  const bots = useSelector((state: RootState) => state.bots.bots)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getBots())
-  }, [dispatch]);
+  }, [dispatch])
 
-  const botRows = bots.map(bot=> [
+  const botRows = bots.map(bot => [
     (<div className="form-check ml-2">
       <label className="form-check-label">
-        <input className="form-check-input" type="checkbox" value="" checked={!!bot.enable} onChange={()=>{}}></input>
+        <input className="form-check-input" type="checkbox" value="" checked={bot.enable} onChange={() => {
+        }}></input>
         <span className="form-check-sign">
             <span className="check"></span>
           </span>
@@ -37,8 +39,8 @@ const Dashboard = props => {
   ])
 
   return (
-    <Fragment>
-      <div className="page-header header-filter" style={{backgroundImage: 'url(/images/city-profile.jpg)', maxHeight: '300px'}}></div>
+    <>
+      <div className="page-header header-filter" style={{backgroundImage: `url(${bg})`, maxHeight: '300px'}}></div>
       <div className="main">
         <div className="container">
           <div className="section text-center">
@@ -51,7 +53,7 @@ const Dashboard = props => {
                       <div className="text-right">
                         <button type="button" className="btn btn-warning btn-sm disabled">Добавить</button>
                       </div>
-                      <Table th={['Запущен', 'Разрешенные id чатов', 'Действия']} rows={botRows} />
+                      <Table th={['Запущен', 'Разрешенные id чатов', 'Действия']} rows={botRows}/>
                     </div>
                   </div>
                 </div>
@@ -60,7 +62,7 @@ const Dashboard = props => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

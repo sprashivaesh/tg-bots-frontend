@@ -1,22 +1,25 @@
-import React, { Fragment, useEffect } from "react";
+import React, {FC, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom'
+import {Link, RouteComponentProps} from 'react-router-dom'
 import Table from "../components/Table";
-import {deleteOneAnswer, getAnswers} from "../state/ducks/autoAnswers/actions.ts";
+import {deleteOneAnswer, getAnswers} from "../state/ducks/autoAnswers/actions";
+import {RootState} from "../state/store";
+import bg from '../assets/images/city-profile.jpg'
 
-const Answers = props => {
-  const botId = props.match.params.botId;
-  document.title = "Ответы бота #" + botId;
+type TParams = { botId: string };
 
-  const answers = useSelector(state => state.answers.answers);
+const Answers: FC<RouteComponentProps<TParams>> = (props) => {
+  const botId = parseInt(props.match.params.botId)
+
+  const answers = useSelector((state:RootState) => state.autoAnswers.answers);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAnswers(botId))
   }, [dispatch, botId]);
 
-  const onDelete = (id) => {
+  const onDelete = (answerId: number) => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Вы уверены?')) dispatch(deleteOneAnswer({answerId:id}))
+    if (confirm('Вы уверены?')) dispatch(deleteOneAnswer(answerId))
   };
 
   const answerRows = answers.map(answer=> [
@@ -41,8 +44,8 @@ const Answers = props => {
   ])
 
   return (
-    <Fragment>
-      <div className="page-header header-filter" style={{backgroundImage: 'url(/images/city-profile.jpg)', maxHeight: '300px'}}></div>
+    <>
+      <div className="page-header header-filter" style={{backgroundImage: `url(${bg})`, maxHeight: '300px'}}></div>
       <div className="main">
         <div className="container">
           <div className="section text-center">
@@ -64,8 +67,8 @@ const Answers = props => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 
-export default Answers;
+export default Answers
