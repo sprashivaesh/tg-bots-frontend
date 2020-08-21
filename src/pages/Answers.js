@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import Table from "../components/Table";
-import {deleteOneAnswer, getAnswers} from "../state/ducks/answers/actions.ts";
+import {deleteOneAnswer, getAnswers} from "../state/ducks/autoAnswers/actions.ts";
 
 const Answers = props => {
   const botId = props.match.params.botId;

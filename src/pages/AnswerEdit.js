@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {createOneAnswer, getOneAnswer, updateOneAnswer} from "../state/ducks/answers/actions.ts";
+import {createOneAnswer, getOneAnswer, updateOneAnswer} from "../state/ducks/autoAnswers/actions.ts";
 import Spinner from '../components/Spinner'
 
 const AnswerEdit = props => {
