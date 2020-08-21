@@ -1,9 +1,9 @@
 import {ActionsTypes} from "./actions";
-import {Answer} from "./types";
+import {AutoAnswer} from "./types";
 
 export type InitialStateType = {
-  answers: Array<Answer>,
-  autoAnswer: Answer|null,
+  answers: Array<AutoAnswer>,
+  autoAnswer: AutoAnswer|null,
   loading: boolean,
   loaded: boolean,
   errors: Array<string>

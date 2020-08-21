@@ -1,23 +1,23 @@
 import {InferActionsTypes, RootState} from "../../store";
 import {ThunkAction} from "redux-thunk";
 import {autoAnswerApi} from "./api";
-import {Answer} from "./types";
+import {AutoAnswer} from "./types";
 
 export const actions = {
   getAutoAnswersRequest: () => ({type: 'tg-bots/answers/GET_ANSWERS_REQUEST'} as const),
-  getAutoAnswersSuccess: (answers: Array<Answer>) => ({type: 'tg-bots/answers/GET_ANSWERS_SUCCESS', payload: {answers}} as const),//вот так надо делать payload
+  getAutoAnswersSuccess: (answers: Array<AutoAnswer>) => ({type: 'tg-bots/answers/GET_ANSWERS_SUCCESS', payload: {answers}} as const),//вот так надо делать payload
 
   getOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/GET_ONE_ANSWER_REQUEST'} as const),
-  getOneAutoAnswerSuccess: (autoAnswer: Answer) => ({type: 'tg-bots/answers/GET_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
+  getOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/GET_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
   createOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/CREATE_ONE_ANSWER_REQUEST'} as const),
-  createOneAutoAnswerSuccess: (autoAnswer: Answer) => ({type: 'tg-bots/answers/CREATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
+  createOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/CREATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
   updateOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_REQUEST'} as const),
-  updateOneAutoAnswerSuccess: (autoAnswer: Answer) => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
+  updateOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
   deleteOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_REQUEST'} as const),
-  deleteOneAutoAnswerSuccess: (autoAnswer: Answer) => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const)
+  deleteOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const)
 }
 
 export type ActionsTypes = InferActionsTypes<typeof actions>

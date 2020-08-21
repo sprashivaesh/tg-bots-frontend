@@ -1,8 +1,11 @@
-export type Answer = {
+export type AutoAnswer = {
   id: number
-  coincidences: string
-  answers: string
   created_at: string
   updated_at: string
-  private: null | boolean
+} & FormValues
+
+export type FormValues = {
+  private: boolean
+  coincidences: string
+  answers: string
 }
