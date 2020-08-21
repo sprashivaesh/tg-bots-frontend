@@ -1,8 +1,9 @@
 import {ActionsTypes} from "./actions";
+import {Answer} from "./types";
 
 export type InitialStateType = {
-  answers: Array<any>,
-  autoAnswer: null | any,
+  answers: Array<Answer>,
+  autoAnswer: Answer|null,
   loading: boolean,
   loaded: boolean,
   errors: Array<string>
@@ -28,7 +29,7 @@ const botReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
 
     case "tg-bots/answers/CREATE_ONE_ANSWER_REQUEST": return {...state, loading: true, loaded: false}
     case "tg-bots/answers/CREATE_ONE_ANSWER_SUCCESS": {
-      const ind = state.answers.indexOf((a:any)=>a.id = action.payload.autoAnswer.id)
+      const ind = state.answers.findIndex((a)=>a.id === action.payload.autoAnswer.id)
       const tmp = [...state.answers]
       if (ind !== -1) tmp.push(action.payload.autoAnswer)
       return {...state, loading: false, loaded: true, answers: tmp, autoAnswer: action.payload.autoAnswer}
@@ -37,7 +38,7 @@ const botReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
 
     case "tg-bots/answers/UPDATE_ONE_ANSWER_REQUEST": return {...state, loading: true, loaded: false}
     case "tg-bots/answers/UPDATE_ONE_ANSWER_SUCCESS": {
-      const ind = state.answers.indexOf((a:any)=>a.id = action.payload.autoAnswer.id)
+      const ind = state.answers.findIndex((a)=>a.id === action.payload.autoAnswer.id)
       const tmp = [...state.answers]
       if (ind === -1) tmp[ind] = {...tmp[ind], ...action.payload.autoAnswer}
       return {...state, loading: false, loaded: true, answers: tmp, autoAnswer: action.payload.autoAnswer}
@@ -46,7 +47,7 @@ const botReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
 
     case "tg-bots/answers/DELETE_ONE_ANSWER_REQUEST": return {...state, loading: true, loaded: false}
     case "tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS": {
-      const ind = state.answers.indexOf((a:any)=>a.id = action.payload.autoAnswer.id)
+      const ind = state.answers.findIndex((a)=>a.id === action.payload.autoAnswer.id)
       const tmp = [...state.answers]
       if (ind === -1) tmp.splice(ind, 1)
       return {...state, loading: false, loaded: true, answers: tmp  }

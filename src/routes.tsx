@@ -7,8 +7,8 @@ import SignUp from "./pages/SignUp";
 import Dashboard from './pages/Dashboard';
 import Bots from "./pages/Bots";
 // import BotEdit from "./pages/BotEdit";
-import Answers from "./pages/Answers";
-// import AnswerEdit from "./pages/AnswerEdit";
+import AutoAnswers from "./pages/AutoAnswers";
+import AutoAnswerEdit from "./pages/AutoAnswerEdit";
 import NotFound from "./pages/NotFound"
 
 
@@ -27,8 +27,8 @@ function App() {
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/bots" component={Bots} />
         {/*<PrivateRoute exact path="/bots/:botId" component={BotEdit} />*/}
-        <PrivateRoute exact path="/bots/:botId/answers" component={Answers} />
-        {/*<PrivateRoute exact path="/bots/:botId/answers/:answerId" component={AnswerEdit} />*/}
+        <PrivateRoute exact path="/bots/:botId/autoAnswers" component={AutoAnswers} />
+        <PrivateRoute exact path="/bots/:botId/autoAnswers/:answerId" component={AutoAnswerEdit} />
         <Route component={NotFound} />
     </Switch>
   )

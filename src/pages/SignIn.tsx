@@ -34,14 +34,15 @@ const SignIn = () => {
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <span className="input-group-text">
-                        <i className="fa fa-user"></i>
+                        <i className="fa fa-user"/>
                       </span>
                     </div>
-                    <input type="text"
-                           name="identifier"
-                           className="form-control"
-                           placeholder="Логин или Email..."
-                           onChange={formik.handleChange}
+                    <input
+                      type="text"
+                      name="identifier"
+                      className="form-control"
+                      placeholder="Логин или Email..."
+                      onChange={formik.handleChange}
                     />
                   </div>
                 </span>
@@ -49,14 +50,15 @@ const SignIn = () => {
                   <div className="input-group">
                     <div className="input-group-prepend">
                       <span className="input-group-text">
-                        <i className="fa fa-unlock-alt"></i>
+                        <i className="fa fa-unlock-alt"/>
                       </span>
                     </div>
-                    <input type="password"
-                           name="password"
-                           className="form-control"
-                           placeholder="Пароль..."
-                           onChange={formik.handleChange}
+                    <input
+                      type="password"
+                       name="password"
+                       className="form-control"
+                       placeholder="Пароль..."
+                       onChange={formik.handleChange}
                     />
                   </div>
                 </span>

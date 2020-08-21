@@ -8,7 +8,7 @@ import bg from '../assets/images/city-profile.jpg'
 
 const Dashboard = () => {
   const bots = useSelector((state: RootState) => state.bots.bots)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getBots())
@@ -17,30 +17,29 @@ const Dashboard = () => {
   const botRows = bots.map(bot => [
     (<div className="form-check ml-2">
       <label className="form-check-label">
-        <input className="form-check-input" type="checkbox" value="" checked={bot.enable} onChange={() => {
-        }}></input>
+        <input className="form-check-input" type="checkbox" value="" checked={bot.enable} onChange={() => {}}/>
         <span className="form-check-sign">
-            <span className="check"></span>
+            <span className="check"/>
           </span>
       </label>
     </div>),
     bot.allowedChatsId,
     (<>
-      <Link className="btn btn-info btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${bot.id}/answers`}}>
-        <i className="fa fa-th-list"></i>
+      <Link className="btn btn-info btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${bot.id}/autoAnswers`}}>
+        <i className="fa fa-th-list"/>
       </Link>
       <Link className="btn btn-success btn-just-icon btn-sm mr-1 disabled" to={{pathname: `/bots/${bot.id}`}}>
-        <i className="fa fa-pencil"></i>
+        <i className="fa fa-pencil"/>
       </Link>
       <button type="button" className="btn btn-danger btn-just-icon btn-sm disabled">
-        <i className="fa fa-times"></i>
+        <i className="fa fa-times"/>
       </button>
     </>)
   ])
 
   return (
     <>
-      <div className="page-header header-filter" style={{backgroundImage: `url(${bg})`, maxHeight: '300px'}}></div>
+      <div className="page-header header-filter" style={{backgroundImage: `url(${bg})`, maxHeight: '300px'}}/>
       <div className="main">
         <div className="container">
           <div className="section text-center">
@@ -63,7 +62,7 @@ const Dashboard = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

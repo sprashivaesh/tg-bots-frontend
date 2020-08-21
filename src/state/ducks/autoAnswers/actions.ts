@@ -5,7 +5,7 @@ import {Answer} from "./types";
 
 export const actions = {
   getAutoAnswersRequest: () => ({type: 'tg-bots/answers/GET_ANSWERS_REQUEST'} as const),
-  getAutoAnswersSuccess: (data: any) => ({type: 'tg-bots/answers/GET_ANSWERS_SUCCESS', payload: {answers: data}} as const),//вот так надо делать payload
+  getAutoAnswersSuccess: (answers: Array<Answer>) => ({type: 'tg-bots/answers/GET_ANSWERS_SUCCESS', payload: {answers}} as const),//вот так надо делать payload
 
   getOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/GET_ONE_ANSWER_REQUEST'} as const),
   getOneAutoAnswerSuccess: (autoAnswer: Answer) => ({type: 'tg-bots/answers/GET_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
