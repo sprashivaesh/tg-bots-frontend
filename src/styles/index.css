@@ -16,3 +16,9 @@ body {
 label {
   margin-bottom: 0;
 }
+
+li.show > .show-dropdown-menu {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}

@@ -1,7 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
-const Footer = props => {
+import React, {FC} from 'react'
+import { Link } from 'react-router-dom'
+const Footer: FC = () => {
   return (
     <footer className="footer footer-default">
       <div className="container">
@@ -12,4 +11,4 @@ const Footer = props => {
     </footer>
   )
 }
-export default Footer;
+export default Footer
