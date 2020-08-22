@@ -11,9 +11,9 @@ const Home = () => {
             <div className="col-md-6">
               <h1 className="title">Очень важный заголовок.</h1>
               <h4>Много букв после заголовка, это обязательно для каждого сайта.</h4>
-              <br></br>
+              <br/>
               <Link className="btn btn-danger btn-raised btn-lg" to={{pathname: '/bots'}}>
-                <i className="fa fa-play"></i> Ваши боты
+                <i className="fa fa-play"/> Ваши боты
               </Link>
             </div>
           </div>
@@ -32,7 +32,7 @@ const Home = () => {
                 <div className="col-md-4">
                   <div className="info">
                     <div className="icon icon-info">
-                      <i className="fa fa-sign-in"></i>
+                      <i className="fa fa-sign-in"/>
                     </div>
                     <h4 className="info-title">Зарегистрируйтесь</h4>
                     <p>Простая регистрация с подтверждением email. Справится даже собака.</p>
@@ -41,7 +41,7 @@ const Home = () => {
                 <div className="col-md-4">
                   <div className="info">
                     <div className="icon icon-success">
-                      <i className="fa fa-plus"></i>
+                      <i className="fa fa-plus"/>
                     </div>
                     <h4 className="info-title">Создайте бота</h4>
                     <p>Создайте своего бота с помощью
@@ -52,7 +52,7 @@ const Home = () => {
                 <div className="col-md-4">
                   <div className="info">
                     <div className="icon icon-danger">
-                      <i className="fa fa-cog"></i>
+                      <i className="fa fa-cog"/>
                     </div>
                     <h4 className="info-title">Добавьте бота</h4>
                     <p>И последнее,
@@ -67,7 +67,6 @@ const Home = () => {
         </div>
       </div>
     </>
-  );
-};
-
-export default Home;
+  )
+}
+export default Home

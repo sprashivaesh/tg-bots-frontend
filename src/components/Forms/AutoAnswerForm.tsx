@@ -1,7 +1,6 @@
 import React, {FC} from "react"
 import {useFormik} from "formik"
-import {FormValues} from "../../state/ducks/autoAnswers/types";
-
+import {FormValues} from "../../state/ducks/autoAnswers/types"
 
 type Props = {
   values: FormValues
@@ -9,7 +8,6 @@ type Props = {
 }
 
 const AutoAnswerForm: FC<Props> = ({values, onSubmit}) => {
-
   const formik = useFormik({
     initialValues: {
       private: values.private,
@@ -71,5 +69,4 @@ const AutoAnswerForm: FC<Props> = ({values, onSubmit}) => {
     </form>
   )
 }
-
 export default AutoAnswerForm

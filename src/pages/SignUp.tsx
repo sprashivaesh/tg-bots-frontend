@@ -1,27 +1,21 @@
 import React from "react"
 import {useSelector, useDispatch} from 'react-redux'
-// import {useForm} from 'react-hook-form'/
 import * as yup from 'yup'
-// import {yupResolver} from '@hookform/resolvers'
 import {signUp} from "../state/ducks/user/actions"
 import {RootState} from "../state/store"
-import {useFormik} from "formik";
+import {useFormik} from "formik"
 import bg from '../assets/images/bg7.jpg'
 
 const SignUp = () => {
-  const signUpErrors = useSelector((state:RootState) => state.user.errors)
+  const signUpErrors = useSelector((state: RootState) => state.user.errors)
   const dispatch = useDispatch();
 
   const schema = yup.object().shape({
-    username: yup.string().min(5,'Минимум 5 символов').max(20, 'Максимум 20 символов').required('Имя пользователя не указано'),
+    username: yup.string().min(5, 'Минимум 5 символов').max(20, 'Максимум 20 символов').required('Имя пользователя не указано'),
     email: yup.string().email('Укажите валидный Email').required('Email не указан'),
     password: yup.string().min(6, 'Минимум 6 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
   });
 
-  // const {register, handleSubmit, errors} = useForm({
-  //   mode: 'onBlur',
-  //   resolver: yupResolver(schema)
-  // });
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -46,10 +40,11 @@ const SignUp = () => {
                   <h4 className="card-title">Регистрация</h4>
                 </div>
                 <div className="card-body">
-                  <div className={`input-group${formik.touched.username && formik.errors.username?' has-danger':''}`}>
+                  <div
+                    className={`input-group${formik.touched.username && formik.errors.username ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                     <span className="input-group-text">
-                      <i className="fa fa-user"></i>
+                      <i className="fa fa-user"/>
                     </span>
                     </div>
                     <div className="flex-auto">
@@ -62,13 +57,14 @@ const SignUp = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
-                      {formik.touched.username && formik.errors.username && (<label htmlFor="usernameInput" className="bmd-label-floating">{formik.errors.username}</label>)}
+                      {formik.touched.username && formik.errors.username && (
+                        <label htmlFor="usernameInput" className="bmd-label-floating">{formik.errors.username}</label>)}
                     </div>
                   </div>
-                  <div className={`input-group${formik.touched.email && formik.errors.email?' has-danger':''}`}>
+                  <div className={`input-group${formik.touched.email && formik.errors.email ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                       <span className="input-group-text">
-                        <i className="fa fa-envelope-o"></i>
+                        <i className="fa fa-envelope-o"/>
                       </span>
                     </div>
                     <div className="flex-auto">
@@ -81,13 +77,15 @@ const SignUp = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
-                      {formik.touched.email && formik.errors.email && (<label htmlFor="emailInput" className="bmd-label-floating">{formik.errors.email}</label>)}
+                      {formik.touched.email && formik.errors.email && (
+                        <label htmlFor="emailInput" className="bmd-label-floating">{formik.errors.email}</label>)}
                     </div>
                   </div>
-                  <div className={`input-group${formik.touched.password && formik.errors.password?' has-danger':''}`}>
+                  <div
+                    className={`input-group${formik.touched.password && formik.errors.password ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                       <span className="input-group-text">
-                        <i className="fa fa-unlock-alt"></i>
+                        <i className="fa fa-unlock-alt"/>
                       </span>
                     </div>
                     <div className="flex-auto">
@@ -100,11 +98,12 @@ const SignUp = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       />
-                      {formik.touched.password && formik.errors.password && (<label htmlFor="passwordInput" className="bmd-label-floating">{formik.errors.password}</label>)}
+                      {formik.touched.password && formik.errors.password && (
+                        <label htmlFor="passwordInput" className="bmd-label-floating">{formik.errors.password}</label>)}
                     </div>
                   </div>
                 </div>
-                {signUpErrors.map(err=>(<div className="text-center text-danger" key={err}>{err}</div>))}
+                {signUpErrors.map(err => (<div className="text-center text-danger" key={err}>{err}</div>))}
                 <div className="card-footer justify-content-center">
                   <button className="btn btn-rose btn-link" type="submit">Погнали</button>
                 </div>
@@ -114,7 +113,6 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-  );
-};
-
+  )
+}
 export default SignUp

@@ -70,5 +70,4 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
     </>
   )
 }
-
 export default AutoAnswers

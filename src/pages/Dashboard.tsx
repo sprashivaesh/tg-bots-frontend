@@ -5,7 +5,7 @@ import bg from '../assets/images/city-profile.jpg'
 const Dashboard = () => {
   return (
     <>
-      <div className="page-header header-filter" style={{backgroundImage: `url("${bg}")`, maxHeight: '300px'}}></div>
+      <div className="page-header header-filter" style={{backgroundImage: `url("${bg}")`, maxHeight: '300px'}}/>
       <div className="main">
         <div className="container">
           <div className="section text-center">
@@ -27,5 +27,4 @@ const Dashboard = () => {
     </>
   )
 }
-
 export default Dashboard

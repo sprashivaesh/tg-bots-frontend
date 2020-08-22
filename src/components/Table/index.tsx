@@ -34,6 +34,6 @@ const Table: FC<Props> = (props) => (
       })}
       </tbody>
     </table>
-  </div>)
-
+  </div>
+)
 export default Table

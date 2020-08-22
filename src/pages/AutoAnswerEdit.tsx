@@ -54,6 +54,6 @@ const AutoAnswerEdit: FC<RouteComponentProps<TParams>> = (props) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 export default AutoAnswerEdit

@@ -92,5 +92,4 @@ const Navbar: FC = () => {
     </nav>
   )
 }
-
 export default Navbar

@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 import {useDispatch} from 'react-redux'
-import {useFormik} from 'formik';
-import {loginWith} from "../state/ducks/user/actions";
-import {Link} from "react-router-dom";
+import {useFormik} from 'formik'
+import {loginWith} from "../state/ducks/user/actions"
+import {Link} from "react-router-dom"
 import bg from '../assets/images/bg7.jpg'
 
 const SignIn = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -75,7 +75,6 @@ const SignIn = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-export default SignIn;
+  )
+}
+export default SignIn
