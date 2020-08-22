@@ -12,7 +12,7 @@ export const autoAnswerApi = {
     return api('post', `/auto-answers/${botId}`, data)
   },
   updateOneAutoAnswer: (answerId: number, data:any):Promise<AutoAnswer> => {
-    return api('post', `/auto-answers/${answerId}`, data)
+    return api('put', `/auto-answers/${answerId}`, data)
   },
   deleteOneAutoAnswer: (answerId: number):Promise<AutoAnswer> => {
     return api('delete', `/auto-answers/${answerId}`)

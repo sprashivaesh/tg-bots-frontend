@@ -48,9 +48,9 @@ const botReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
     case "tg-bots/answers/DELETE_ONE_ANSWER_REQUEST": return {...state, loading: true, loaded: false}
     case "tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS": {
       const ind = state.answers.findIndex((a)=>a.id === action.payload.autoAnswer.id)
-      const tmp = [...state.answers]
-      if (ind === -1) tmp.splice(ind, 1)
-      return {...state, loading: false, loaded: true, answers: tmp  }
+      const answers = [...state.answers]
+      if (ind !== -1) answers.splice(ind, 1)
+      return {...state, loading: false, loaded: true, answers }
     }
     // case "tg-bots/answers/DELETE_ONE_ANSWER_FAILURE": return {...state, loading: false, loaded: false, errors}
 
