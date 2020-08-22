@@ -8,7 +8,6 @@ import Dashboard from './pages/Dashboard';
 import Bots from "./pages/Bots";
 // import BotEdit from "./pages/BotEdit";
 import AutoAnswers from "./pages/AutoAnswers";
-import AutoAnswerEdit from "./pages/AutoAnswerEdit";
 import NotFound from "./pages/NotFound"
 
 
@@ -28,7 +27,6 @@ function App() {
         <PrivateRoute exact path="/bots" component={Bots} />
         {/*<PrivateRoute exact path="/bots/:botId" component={BotEdit} />*/}
         <PrivateRoute exact path="/bots/:botId/autoAnswers" component={AutoAnswers} />
-        <PrivateRoute exact path="/bots/:botId/autoAnswers/:answerId" component={AutoAnswerEdit} />
         <Route component={NotFound} />
     </Switch>
   )

@@ -1,17 +1,19 @@
 import React, {FC, useEffect} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link, RouteComponentProps} from 'react-router-dom'
-import Table from "../components/Table";
-import {deleteOneAnswer, getAnswers} from "../state/ducks/autoAnswers/actions";
+import {createOneAnswer, deleteOneAnswer, getAnswers, updateOneAnswer} from "../state/ducks/autoAnswers/actions";
 import {RootState} from "../state/store";
 import bg from '../assets/images/city-profile.jpg'
+import AutoAnswerForm from "../components/Forms/AutoAnswerForm";
+import {FormValues} from "../state/ducks/autoAnswers/types";
 
 type TParams = { botId: string };
 
 const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
   const botId = parseInt(props.match.params.botId)
 
-  const answers = useSelector((state:RootState) => state.autoAnswers.answers);
+  const answers = useSelector((state: RootState) => state.autoAnswers.answers)
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAnswers(botId))
@@ -20,28 +22,15 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
   const onDelete = (answerId: number) => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Вы уверены?')) dispatch(deleteOneAnswer(answerId))
-  };
+  }
 
-  const answerRows = answers.map(answer=> [
-    (<div className="form-check ml-2">
-      <label className="form-check-label">
-        <input className="form-check-input" type="checkbox" value="" checked={!!answer.private} onChange={()=>{}}/>
-        <span className="form-check-sign">
-            <span className="check"/>
-          </span>
-      </label>
-    </div>),
-    answer.coincidences,
-    answer.answers,
-    (<>
-      <Link className="btn btn-success btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${botId}/autoAnswers/${answer.id}`}}>
-        <i className="fa fa-pencil"/>
-      </Link>
-      <button type="button" className="btn btn-danger btn-just-icon btn-sm" onClick={()=>onDelete(answer.id)}>
-        <i className="fa fa-times"/>
-      </button>
-    </>)
-  ])
+  const onSubmit = (autoAnswerId: number, values: FormValues) => {
+    if (autoAnswerId === 0) {
+      dispatch(createOneAnswer(botId, values))
+    } else {
+      dispatch(updateOneAnswer(autoAnswerId, values))
+    }
+  }
 
   return (
     <>
@@ -56,9 +45,24 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
                   <div className="row">
                     <div className="col-12">
                       <div className="text-right">
-                        <Link className="btn btn-warning btn-sm" to={{pathname: `/bots/${botId}/answers/0`}}>Добавить</Link>
+                        <Link className="btn btn-warning btn-sm"
+                              to={{pathname: `/bots/${botId}/answers/0`}}>Добавить</Link>
                       </div>
-                      <Table th={['Приватно', 'Совпадения', 'Ответы', 'Действия']} rows={answerRows} />
+                      {answers.map((autoAnswer) => (
+                        <AutoAnswerForm
+                          key={autoAnswer.id}
+                          values={{
+                            private: autoAnswer.private,
+                            coincidences: autoAnswer.coincidences,
+                            answers: autoAnswer.answers
+                          }}
+                          onSubmit={(values) => {
+                            onSubmit(autoAnswer.id, values)
+                          }}
+                          onDelete={onDelete}
+                          id={autoAnswer.id}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
