@@ -9,6 +9,7 @@ import Footer from "./components/Footer"
 
 import App from "./routes"
 import * as serviceWorker from './serviceWorker'
+import './styles/material-kit.css'
 import './styles/index.css'
 
 

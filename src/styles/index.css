@@ -22,3 +22,31 @@ li.show > .show-dropdown-menu {
   opacity: 1;
   transform: scale(1);
 }
+
+
+
+.spinner {
+  /* Spinner size and color */
+  width: 0.875rem;
+  height: 0.875rem;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  margin-left: 0.25rem;
+
+  /* Additional spinner styles */
+  animation: spinner 400ms linear infinite;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Animation styles */
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

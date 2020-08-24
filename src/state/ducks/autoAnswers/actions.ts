@@ -7,16 +7,17 @@ export const actions = {
   getAutoAnswersRequest: () => ({type: 'tg-bots/answers/GET_ANSWERS_REQUEST'} as const),
   getAutoAnswersSuccess: (answers: Array<AutoAnswer>) => ({type: 'tg-bots/answers/GET_ANSWERS_SUCCESS', payload: {answers}} as const),//вот так надо делать payload
 
-  getOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/GET_ONE_ANSWER_REQUEST'} as const),
-  getOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/GET_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
+  // getOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/GET_ONE_ANSWER_REQUEST'} as const),
+  // getOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/GET_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
+  setIsCreatingOneAutoAnswer: () => ({type: 'tg-bots/answers/SET_IS_CREATING_ONE_ANSWER'} as const),
   createOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/CREATE_ONE_ANSWER_REQUEST'} as const),
   createOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/CREATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
-  updateOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_REQUEST'} as const),
+  updateOneAutoAnswerRequest: (autoAnswerId: number) => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_REQUEST', payload: {autoAnswerId}} as const),
   updateOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/UPDATE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const),
 
-  deleteOneAutoAnswerRequest: () => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_REQUEST'} as const),
+  deleteOneAutoAnswerRequest: (autoAnswerId: number) => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_REQUEST', payload: {autoAnswerId}} as const),
   deleteOneAutoAnswerSuccess: (autoAnswer: AutoAnswer) => ({type: 'tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS', payload: {autoAnswer}} as const)
 }
 
@@ -36,15 +37,18 @@ export const getAnswers = (botId: number): ThunkAT => async (dispatch) => {
     console.log(e)
   }
 }
-export const getOneAnswer = (answerId:number): ThunkAT => async (dispatch: any) => {
-  // if (answerId === 0) return dispatch(actions.getOneAutoAnswerSuccess({}))
-  dispatch(actions.getOneAutoAnswerRequest())
-  try {
-    let data = await autoAnswerApi.getOneAutoAnswer(answerId)
-    dispatch(actions.getOneAutoAnswerSuccess(data))
-  } catch (e) {
-    console.log(e)
-  }
+// export const getOneAnswer = (autoAnswerId:number): ThunkAT => async (dispatch: any) => {
+//   // if (answerId === 0) return dispatch(actions.getOneAutoAnswerSuccess({}))
+//   dispatch(actions.getOneAutoAnswerRequest())
+//   try {
+//     let data = await autoAnswerApi.getOneAutoAnswer(autoAnswerId)
+//     dispatch(actions.getOneAutoAnswerSuccess(data))
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+export const setIsCreatingOneAutoAnswer = (): ThunkAT => async (dispatch) => {
+  dispatch(actions.setIsCreatingOneAutoAnswer())
 }
 export const createOneAnswer = (botId:number, form:AutoAnswerForm): ThunkAT => async (dispatch) => {
   dispatch(actions.createOneAutoAnswerRequest())
@@ -55,19 +59,19 @@ export const createOneAnswer = (botId:number, form:AutoAnswerForm): ThunkAT => a
     console.log(e)
   }
 }
-export const updateOneAnswer = (answerId:number, form:AutoAnswerForm): ThunkAT => async (dispatch) => {
-  dispatch(actions.updateOneAutoAnswerRequest())
+export const updateOneAnswer = (autoAnswerId:number, form:AutoAnswerForm): ThunkAT => async (dispatch) => {
+  dispatch(actions.updateOneAutoAnswerRequest(autoAnswerId))
   try {
-    let data = await autoAnswerApi.updateOneAutoAnswer(answerId, form)
+    let data = await autoAnswerApi.updateOneAutoAnswer(autoAnswerId, form)
     dispatch(actions.updateOneAutoAnswerSuccess(data))
   } catch (e) {
     console.log(e)
   }
 }
-export const deleteOneAnswer = (answerId: number): ThunkAT => async (dispatch) => {
-  dispatch(actions.deleteOneAutoAnswerRequest())
+export const deleteOneAnswer = (autoAnswerId: number): ThunkAT => async (dispatch) => {
+  dispatch(actions.deleteOneAutoAnswerRequest(autoAnswerId))
   try {
-    let data = await autoAnswerApi.deleteOneAutoAnswer(answerId)
+    let data = await autoAnswerApi.deleteOneAutoAnswer(autoAnswerId)
     dispatch(actions.deleteOneAutoAnswerSuccess(data))
   } catch (e) {
     console.log(e)
