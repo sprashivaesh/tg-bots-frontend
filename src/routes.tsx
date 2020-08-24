@@ -6,7 +6,6 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from './pages/Dashboard';
 import Bots from "./pages/Bots";
-// import BotEdit from "./pages/BotEdit";
 import AutoAnswers from "./pages/AutoAnswers";
 import NotFound from "./pages/NotFound"
 
@@ -25,7 +24,6 @@ function App() {
         <GuestRoute exact path="/sign_up" component={SignUp} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/bots" component={Bots} />
-        {/*<PrivateRoute exact path="/bots/:botId" component={BotEdit} />*/}
         <PrivateRoute exact path="/bots/:botId/autoAnswers" component={AutoAnswers} />
         <Route component={NotFound} />
     </Switch>
