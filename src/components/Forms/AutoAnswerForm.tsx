@@ -1,6 +1,9 @@
 import React, {FC} from "react"
 import {useFormik} from "formik"
 import {FormValues} from "../../state/ducks/autoAnswers/types"
+import * as yup from 'yup'
+import classNames from 'classnames'
+
 
 type Props = {
   values: FormValues
@@ -12,12 +15,18 @@ type Props = {
 }
 
 const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDeleting}) => {
+  const schema = yup.object().shape({
+    private: yup.boolean(),
+    coincidences: yup.string().required('Обязательное поле'),
+    answers: yup.string().required('Обязательное поле')
+  });
   const form = useFormik({
     initialValues: {
       private: values.private,
       coincidences: values.coincidences,
       answers: values.answers
     },
+    validationSchema: schema,
     onSubmit: (values) => onSubmit(id, values)
   })
   // console.log(id)
@@ -26,7 +35,7 @@ const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, is
   return (
     <form onSubmit={form.handleSubmit} className="mb-5 col-10 mx-auto">
       <div className="row text-left">
-        <div className="col-12 col-lg-5 form-group label-floating">
+        <div className={classNames('col-12 col-lg-5 form-group label-floating', {'has-danger': (form.touched.coincidences && form.errors.coincidences)})}>
           <label className="form-control-label bmd-label-floating" htmlFor={'coincidencesTextarea'+id}>
             Фразы, которые бот увидит в тексте, каждая с новой строки
           </label>
@@ -35,11 +44,13 @@ const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, is
             rows={5}
             name="coincidences"
             id={'coincidencesTextarea'+id}
-            onChange={form.handleChange}
             value={form.values.coincidences}
+            onChange={form.handleChange}
+            onBlur={form.handleBlur}
           />
+          {form.touched.coincidences && form.errors.coincidences && <span className="bmd-label-floating">{form.errors.coincidences}</span>}
         </div>
-        <div className="col-12 col-lg-5 form-group label-floating">
+        <div className={classNames('col-12 col-lg-5 form-group label-floating', {'has-danger': (form.touched.answers && form.errors.answers)})}>
           <label className="form-control-label bmd-label-floating" htmlFor={'answersTextarea'+id}>
             Фразы, которые бот будет отвечать, каждая с новой строки, для фраз с переносом строк используйте <b>\n</b>
           </label>
@@ -49,8 +60,10 @@ const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, is
             name="answers"
             id={'answersTextarea'+id}
             onChange={form.handleChange}
+            onBlur={form.handleBlur}
             value={form.values.answers}
           />
+          {form.touched.answers && form.errors.answers && <span className="bmd-label-floating">{form.errors.answers}</span>}
         </div>
         <div className="col-12 col-lg-2">
           <div className="form-check">

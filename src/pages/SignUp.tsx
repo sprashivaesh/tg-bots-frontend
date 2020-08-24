@@ -6,6 +6,7 @@ import {RootState} from "../state/store"
 import {useFormik} from "formik"
 import bg from '../assets/images/bg7.jpg'
 
+
 const SignUp = () => {
   const signUpErrors = useSelector((state: RootState) => state.user.errors)
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const SignUp = () => {
     password: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
   });
 
-  const formik = useFormik({
+  const form = useFormik({
     initialValues: {
       username: '',
       email: '',
@@ -34,14 +35,14 @@ const SignUp = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-            <form className="form" onSubmit={formik.handleSubmit}>
+            <form className="form" onSubmit={form.handleSubmit}>
               <div className="card card-login card-hidden">
                 <div className="card-header card-header-primary text-center">
                   <h4 className="card-title">Регистрация</h4>
                 </div>
                 <div className="card-body">
                   <div
-                    className={`input-group${formik.touched.username && formik.errors.username ? ' has-danger' : ''}`}>
+                    className={`input-group${form.touched.username && form.errors.username ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                     <span className="input-group-text">
                       <i className="fa fa-user"/>
@@ -54,14 +55,14 @@ const SignUp = () => {
                         type="text"
                         placeholder="Имя пользователя"
                         name="username"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                       />
-                      {formik.touched.username && formik.errors.username && (
-                        <label htmlFor="usernameInput" className="bmd-label-floating">{formik.errors.username}</label>)}
+                      {form.touched.username && form.errors.username && (
+                        <label htmlFor="usernameInput" className="bmd-label-floating">{form.errors.username}</label>)}
                     </div>
                   </div>
-                  <div className={`input-group${formik.touched.email && formik.errors.email ? ' has-danger' : ''}`}>
+                  <div className={`input-group${form.touched.email && form.errors.email ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                       <span className="input-group-text">
                         <i className="fa fa-envelope-o"/>
@@ -74,15 +75,15 @@ const SignUp = () => {
                         type="text"
                         placeholder="Email"
                         name="email"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                       />
-                      {formik.touched.email && formik.errors.email && (
-                        <label htmlFor="emailInput" className="bmd-label-floating">{formik.errors.email}</label>)}
+                      {form.touched.email && form.errors.email && (
+                        <label htmlFor="emailInput" className="bmd-label-floating">{form.errors.email}</label>)}
                     </div>
                   </div>
                   <div
-                    className={`input-group${formik.touched.password && formik.errors.password ? ' has-danger' : ''}`}>
+                    className={`input-group${form.touched.password && form.errors.password ? ' has-danger' : ''}`}>
                     <div className="input-group-prepend">
                       <span className="input-group-text">
                         <i className="fa fa-unlock-alt"/>
@@ -95,11 +96,11 @@ const SignUp = () => {
                         type="text"
                         placeholder="Пароль"
                         name="password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        onChange={form.handleChange}
+                        onBlur={form.handleBlur}
                       />
-                      {formik.touched.password && formik.errors.password && (
-                        <label htmlFor="passwordInput" className="bmd-label-floating">{formik.errors.password}</label>)}
+                      {form.touched.password && form.errors.password && (
+                        <label htmlFor="passwordInput" className="bmd-label-floating">{form.errors.password}</label>)}
                     </div>
                   </div>
                 </div>
