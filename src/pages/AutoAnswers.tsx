@@ -33,7 +33,6 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
 
   const onCreate = () => {
     dispatch(setIsCreatingOneAutoAnswer())
-    //dispatch(createOneAnswer(botId, values))
   }
 
   const onDelete = (answerId: number) => {
@@ -70,9 +69,7 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
                               coincidences: autoAnswer.coincidences,
                               answers: autoAnswer.answers
                             }}
-                            onSubmit={(values) => {
-                              onSubmit(autoAnswer.id, values)
-                            }}
+                            onSubmit={onSubmit}
                             onDelete={onDelete}
                             id={autoAnswer.id}
                             isSaving={!!loadingSavingIds[autoAnswer.id]}
@@ -86,9 +83,7 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
                               coincidences: '',
                               answers: ''
                             }}
-                            onSubmit={(values) => {
-                              onSubmit(0, values)
-                            }}
+                            onSubmit={onSubmit}
                             id={0}
                             isSaving={!!loadingSavingIds[0]}
                           /> :

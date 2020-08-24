@@ -4,7 +4,7 @@ import {FormValues} from "../../state/ducks/autoAnswers/types"
 
 type Props = {
   values: FormValues
-  onSubmit: (values: FormValues) => void
+  onSubmit: (id:number, values: FormValues) => void
   id: number
   isSaving: boolean
   onDelete?: (id: number) => void
@@ -18,7 +18,7 @@ const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, is
       coincidences: values.coincidences,
       answers: values.answers
     },
-    onSubmit
+    onSubmit: (values) => onSubmit(id, values)
   })
   // console.log(id)
   // console.log(form.dirty)

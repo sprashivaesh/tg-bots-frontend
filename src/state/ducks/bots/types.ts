@@ -1,6 +1,9 @@
+export type FormValues = {
+  enable: boolean
+  allowedChatsId: Array<number>
+  token: string
+}
 
 export type Bot = {
   id: number
-  allowedChatsId: number
-  enable: boolean
-}
+} & FormValues

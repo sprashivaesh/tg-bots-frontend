@@ -1,41 +1,65 @@
-import React, {useEffect} from "react"
+import React, {FC, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Link} from 'react-router-dom'
 import {getBots} from "../state/ducks/bots/actions"
-import Table from "../components/Table"
 import {RootState} from "../state/store"
 import bg from '../assets/images/city-profile.jpg'
+import BotEditForm from "../components/Forms/BotEditForm"
+import Spinner from "../components/Spinner"
+import {FormValues} from "../state/ducks/bots/types"
 
-const Dashboard = () => {
+const Bots: FC = () => {
   const bots = useSelector((state: RootState) => state.bots.bots)
+  const loadingSavingIds = useSelector((state: RootState) => state.bots.loadingSavingIds)
+  const loadingDeletingIds = useSelector((state: RootState) => state.bots.loadingDeletingIds)
+  const loading = useSelector((state: RootState) => state.bots.loading)
+  const isCreating = useSelector((state: RootState) => state.bots.isCreating)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getBots())
   }, [dispatch])
 
-  const botRows = bots.map(bot => [
-    (<div className="form-check ml-2">
-      <label className="form-check-label">
-        <input className="form-check-input" type="checkbox" value="" checked={bot.enable} onChange={() => {}}/>
-        <span className="form-check-sign">
-            <span className="check"/>
-          </span>
-      </label>
-    </div>),
-    bot.allowedChatsId,
-    (<>
-      <Link className="btn btn-info btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${bot.id}/autoAnswers`}}>
-        <i className="fa fa-th-list"/>
-      </Link>
-      <Link className="btn btn-success btn-just-icon btn-sm mr-1 disabled" to={{pathname: `/bots/${bot.id}`}}>
-        <i className="fa fa-pencil"/>
-      </Link>
-      <button type="button" className="btn btn-danger btn-just-icon btn-sm disabled">
-        <i className="fa fa-times"/>
-      </button>
-    </>)
-  ])
+  const onCreate = () => {
+    // dispatch(setIsCreatingBot())
+  }
+
+  const onDelete = (botId: number) => {
+    // eslint-disable-next-line no-restricted-globals
+    // if (confirm('Вы уверены?')) dispatch(deleteBot(botId))
+  }
+
+  const onSubmit = (botId: number, values: FormValues) => {
+    // if (botId === 0) {
+    //   dispatch(createBot(values))
+    // } else {
+    //   dispatch(updateBot(botId, values))
+    // }
+  }
+
+
+  // const botRows = bots.map(bot => [
+  //   (<div className="form-check ml-2">
+  //     <label className="form-check-label">
+  //       <input className="form-check-input" type="checkbox" value="" checked={bot.enable} onChange={() => {}}/>
+  //       <span className="form-check-sign">
+  //           <span className="check"/>
+  //         </span>
+  //     </label>
+  //   </div>),
+  //   bot.allowedChatsId,
+  //   (<>
+  //     <Link className="btn btn-info btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${bot.id}/autoAnswers`}}>
+  //       <i className="fa fa-th-list"/>
+  //     </Link>
+  //     <Link className="btn btn-success btn-just-icon btn-sm mr-1 disabled" to={{pathname: `/bots/${bot.id}`}}>
+  //       <i className="fa fa-pencil"/>
+  //     </Link>
+  //     <button type="button" className="btn btn-danger btn-just-icon btn-sm disabled">
+  //       <i className="fa fa-times"/>
+  //     </button>
+  //   </>)
+  // ])
 
   return (
     <>
@@ -47,14 +71,43 @@ const Dashboard = () => {
               <div className="col-md-12">
                 <div id="contentAreas" className="cd-section">
                   <h2>Ваши боты</h2>
-                  <div className="row">
-                    <div className="col-12">
-                      <div className="text-right">
-                        <button type="button" className="btn btn-warning btn-sm disabled">Добавить</button>
+                  {loading ?
+                    <Spinner/> :
+                    <div className="row">
+                      <div className="col-12 mt-5">
+                        {bots.map((bot) => (
+                          <BotEditForm
+                            key={bot.id}
+                            id={bot.id}
+                            values={{
+                              allowedChatsId: bot.allowedChatsId,
+                              enable: bot.enable,
+                              token: bot.token
+                            }}
+                            onSubmit={onSubmit}
+                            onDelete={onDelete}
+                            isSaving={!!loadingSavingIds[bot.id]}
+                            isDeleting={!!loadingDeletingIds[bot.id]}
+                          />
+                        ))}
+                        {isCreating ?
+                          <BotEditForm
+                            id={0}
+                            values={{
+                              allowedChatsId: [],
+                              enable: false,
+                              token: ''
+                            }}
+                            onSubmit={onSubmit}
+                            isSaving={!!loadingSavingIds[0]}
+                          /> :
+                          <div className="text-center">
+                            <button className="btn btn-warning btn-sm" onClick={onCreate}>Добавить</button>
+                          </div>
+                        }
                       </div>
-                      <Table th={['Запущен', 'Разрешенные id чатов', 'Действия']} rows={botRows}/>
                     </div>
-                  </div>
+                  }
                 </div>
               </div>
             </div>
@@ -64,4 +117,4 @@ const Dashboard = () => {
     </>
   )
 }
-export default Dashboard
+export default Bots
