@@ -102,7 +102,7 @@ const Bots: FC = () => {
                             isSaving={!!loadingSavingIds[0]}
                           /> :
                           <div className="text-center">
-                            <button className="btn btn-warning btn-sm" onClick={onCreate}>Добавить</button>
+                            <button className="btn btn-warning btn-sm" onClick={onCreate} disabled={true}>Добавить</button>
                           </div>
                         }
                       </div>

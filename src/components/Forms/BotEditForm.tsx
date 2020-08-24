@@ -72,11 +72,11 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
         {/*  />*/}
         {/*</div>*/}
         <div className="col-12">
-          <Link className="btn btn-info btn-just-icon btn-sm mr-1" to={{pathname: `/bots/${id}/autoAnswers`}}>
-            <i className="fa fa-th-list"/>
+          <Link className="btn btn-info btn-sm mr-1" to={{pathname: `/bots/${id}/autoAnswers`}}>
+            Автоответы бота
           </Link>
           {onDelete ? (
-              <button className="btn btn-danger btn-sm" type="button" onClick={() => onDelete(id)} disabled={isDeleting}>
+              <button className="btn btn-danger btn-sm" type="button" onClick={() => onDelete(id)} disabled={isDeleting || true}>
                 Удалить
                 {isDeleting ? <span className="spinner"/> : ''}
               </button>)
@@ -84,7 +84,7 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
           <button className="btn btn-sm" type="button" onClick={() => form.resetForm()}
                   disabled={!form.dirty}>Восстановить
           </button>
-          <button className="btn btn-success btn-sm" type="submit" disabled={!form.dirty || isSaving}>
+          <button className="btn btn-success btn-sm" type="submit" disabled={!form.dirty || isSaving || true}>
             Сохранить
             {isSaving ? <span className="spinner"/> : ''}
           </button>
