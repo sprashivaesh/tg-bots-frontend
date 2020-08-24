@@ -11,9 +11,9 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const schema = yup.object().shape({
-    username: yup.string().min(5, 'Минимум 5 символов').max(20, 'Максимум 20 символов').required('Имя пользователя не указано'),
+    username: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Имя пользователя не указано'),
     email: yup.string().email('Укажите валидный Email').required('Email не указан'),
-    password: yup.string().min(6, 'Минимум 6 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
+    password: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
   });
 
   const formik = useFormik({
