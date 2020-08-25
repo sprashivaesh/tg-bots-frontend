@@ -2,6 +2,7 @@ import {userApi} from "./api";
 import {LoginForm, Provider, SignUpForm} from "./types";
 import {ThunkAction} from "redux-thunk";
 import {InferActionsTypes, RootState} from "../../store";
+import {addNotification} from "../notifications/actions";
 
 export const actions = {
   loginRequest: () => ({type: 'tg-bots/user/LOGIN_REQUEST'} as const),
@@ -10,13 +11,13 @@ export const actions = {
   meSuccess: (data: any) => ({type: 'tg-bots/user/ME_SUCCESS', payload: {...data}} as const),
   signUpRequest: () => ({type: 'tg-bots/user/SIGN_UP_REQUEST'} as const),
   logout: () => ({type: 'tg-bots/user/LOGOUT'} as const),
-  signUpFailure: (errors: Array<string>) => ({type: 'user/SIGN_UP_FAILURE', errors} as const)
+  // signUpFailure: (errors: Array<string>) => ({type: 'user/SIGN_UP_FAILURE', errors} as const)
 }
 
 export type ActionsTypes = InferActionsTypes<typeof actions>
 type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 
-const  errorsFormatter = function (e:any):Array<string> {
+const errorsFormatter = function (e: any): Array<string> {
   const {message} = e.response.data
   const errors = []
   if (message && message[0] && message[0].messages && message[0].messages[0]) {
@@ -44,7 +45,7 @@ const  errorsFormatter = function (e:any):Array<string> {
         errors.push('Имя пользователя уже занято')
         break
       default:
-        errors.push('Ошибка регистрации')
+        errors.push('Ошибка сервера')
     }
   }
   return errors
@@ -67,13 +68,17 @@ export const loginWith = (form: LoginForm, provider?: Provider): ThunkAT => asyn
     dispatch(actions.loginSuccess(data))
   } catch (e) {
     const errors = errorsFormatter(e)
-    console.log(errors)
-    // dispatch(actions.loginFailure(e))
+    errors.forEach(message => (dispatch(addNotification({type: 'danger', message}))))
   }
 }
 export const getUserData = (): ThunkAT => async (dispatch) => {
-  const data = await userApi.getUserData()
-  dispatch(actions.meSuccess(data))
+  try {
+    const data = await userApi.getUserData()
+    dispatch(actions.meSuccess(data))
+  } catch (e){
+    const errors = errorsFormatter(e)
+    errors.forEach(message => (dispatch(addNotification({type: 'danger', message}))))
+  }
 }
 export const signUp = (form: SignUpForm): ThunkAT => async (dispatch) => {
   dispatch(actions.signUpRequest())
@@ -84,7 +89,8 @@ export const signUp = (form: SignUpForm): ThunkAT => async (dispatch) => {
     dispatch(actions.meSuccess(data.user))
   } catch (e) {
     const errors = errorsFormatter(e)
-    dispatch(actions.signUpFailure(errors))
+    errors.forEach(message => (dispatch(addNotification({type: 'danger', message}))))
+    // dispatch(actions.signUpFailure(errors))
   }
 }
 export const logout = (): ThunkAT => async (dispatch) => {

@@ -1,7 +1,7 @@
 import {InferActionsTypes, RootState} from "../../store";
 import {ThunkAction} from "redux-thunk";
 import {autoAnswerApi} from "./api";
-import {AutoAnswer} from "./types";
+import {AutoAnswer, FormValues} from "./types";
 
 export const actions = {
   getAutoAnswersRequest: () => ({type: 'tg-bots/answers/GET_ANSWERS_REQUEST'} as const),
@@ -24,9 +24,6 @@ export const actions = {
 export type ActionsTypes = InferActionsTypes<typeof actions>
 type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 
-type AutoAnswerForm = {
-
-}
 
 export const getAnswers = (botId: number): ThunkAT => async (dispatch) => {
   dispatch(actions.getAutoAnswersRequest())
@@ -50,7 +47,7 @@ export const getAnswers = (botId: number): ThunkAT => async (dispatch) => {
 export const setIsCreatingOneAutoAnswer = (): ThunkAT => async (dispatch) => {
   dispatch(actions.setIsCreatingOneAutoAnswer())
 }
-export const createOneAnswer = (botId:number, form:AutoAnswerForm): ThunkAT => async (dispatch) => {
+export const createOneAnswer = (botId:number, form:FormValues): ThunkAT => async (dispatch) => {
   dispatch(actions.createOneAutoAnswerRequest())
   try {
     let data = await autoAnswerApi.createOneAutoAnswer(botId, form)
@@ -59,7 +56,7 @@ export const createOneAnswer = (botId:number, form:AutoAnswerForm): ThunkAT => a
     console.log(e)
   }
 }
-export const updateOneAnswer = (autoAnswerId:number, form:AutoAnswerForm): ThunkAT => async (dispatch) => {
+export const updateOneAnswer = (autoAnswerId:number, form:FormValues): ThunkAT => async (dispatch) => {
   dispatch(actions.updateOneAutoAnswerRequest(autoAnswerId))
   try {
     let data = await autoAnswerApi.updateOneAutoAnswer(autoAnswerId, form)

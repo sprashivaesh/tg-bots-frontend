@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard'
 import Bots from "./pages/Bots"
 import AutoAnswers from "./pages/AutoAnswers"
 import NotFound from "./pages/NotFound"
+import Notifications from "./components/Notifications"
 
 
 const ScrollToTop: FC<PropsWithChildren<any>> = (props) => {
@@ -41,6 +42,7 @@ function App() {
         <PrivateRoute exact path="/bots/:botId/autoAnswers" component={AutoAnswers} />
         <Route component={NotFound} />
       </Switch>
+      <Notifications />
       <Footer/>
     </ScrollToTop>
   )
