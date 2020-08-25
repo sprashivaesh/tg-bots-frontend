@@ -5,8 +5,8 @@ type InitialState = {
   answers: Array<AutoAnswer>,
   // autoAnswer: AutoAnswer|null,
   loading: boolean,
-  loadingSavingIds: {[key:string]:boolean}
-  loadingDeletingIds: {[key:string]:boolean}
+  inSavingIds: Array<number>
+  inDeletingIds: Array<number>
   isCreating: boolean
   loaded: boolean,
   errors: Array<string>
@@ -15,8 +15,8 @@ const initialState: InitialState = {
   answers: [],
   // autoAnswer: null,
   loading: false,
-  loadingSavingIds: {},
-  loadingDeletingIds: {},
+  inSavingIds: [],
+  inDeletingIds: [],
   isCreating: false,
   loaded: false,
   errors: []
@@ -39,35 +39,29 @@ const botReducer = (state = initialState, action: ActionsTypes): InitialState =>
 
     case "tg-bots/answers/SET_IS_CREATING_ONE_ANSWER": return {...state, isCreating: true}
     case "tg-bots/answers/CREATE_ONE_ANSWER_REQUEST":
-      return {...state, loadingSavingIds: {...state.loadingSavingIds, 0: true}}
+      return {...state, inSavingIds: [...state.inSavingIds, 0]}
     case "tg-bots/answers/CREATE_ONE_ANSWER_SUCCESS": {
-      const loadingSavingIds = {...state.loadingSavingIds}
-      delete loadingSavingIds[0]
-      return {...state, loadingSavingIds, answers: [...state.answers, ...[action.payload.autoAnswer]], isCreating: false}
+      return {...state, inSavingIds: state.inSavingIds.filter(id=>id!==0), answers: [...state.answers, ...[action.payload.autoAnswer]], isCreating: false}
     }
     // case "tg-bots/answers/CREATE_ONE_ANSWER_FAILURE": return {...state, loading: false, loaded: false, errors}
 
     case "tg-bots/answers/UPDATE_ONE_ANSWER_REQUEST":
-      return {...state, loadingSavingIds: {...state.loadingSavingIds, [action.payload.autoAnswerId]: true}}
+      return {...state, inSavingIds: [...state.inSavingIds, action.payload.autoAnswerId]}
     case "tg-bots/answers/UPDATE_ONE_ANSWER_SUCCESS": {
       const ind = state.answers.findIndex((a) => a.id === action.payload.autoAnswer.id)
       const answers = [...state.answers]
       if (ind !== -1) answers[ind] = {...action.payload.autoAnswer}
-      const loadingSavingIds = {...state.loadingSavingIds}
-      delete loadingSavingIds[action.payload.autoAnswer.id]
-      return {...state, loadingSavingIds, answers}
+      return {...state, inSavingIds: state.inSavingIds.filter(id=>id!==action.payload.autoAnswer.id), answers}
     }
     // case "tg-bots/answers/UPDATE_ONE_ANSWER_FAILURE": return {...state, loading: false, loaded: false, errors}
 
     case "tg-bots/answers/DELETE_ONE_ANSWER_REQUEST":
-      return {...state, loadingDeletingIds: {...state.loadingDeletingIds, [action.payload.autoAnswerId]: true}}
+      return {...state, inDeletingIds: [...state.inDeletingIds, action.payload.autoAnswerId]}
     case "tg-bots/answers/DELETE_ONE_ANSWER_SUCCESS": {
       const ind = state.answers.findIndex((a) => a.id === action.payload.autoAnswer.id)
       const answers = [...state.answers]
       if (ind !== -1) answers.splice(ind, 1)
-      const loadingDeletingIds = {...state.loadingDeletingIds}
-      delete loadingDeletingIds[action.payload.autoAnswer.id]
-      return {...state, loadingDeletingIds, answers}
+      return {...state, inDeletingIds: state.inDeletingIds.filter(id=>id!==action.payload.autoAnswer.id), answers}
     }
     // case "tg-bots/answers/DELETE_ONE_ANSWER_FAILURE": return {...state, loading: false, loaded: false, errors}
 

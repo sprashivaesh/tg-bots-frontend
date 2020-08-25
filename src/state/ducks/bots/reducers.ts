@@ -4,8 +4,8 @@ import {Bot} from "./types";
 type InitialState = {
   bots: Array<Bot>,
   loading: boolean,
-  loadingSavingIds: {[key:string]:boolean}
-  loadingDeletingIds: {[key:string]:boolean}
+  inSavingIds: Array<number>
+  inDeletingIds: Array<number>
   isCreating: boolean
   loaded: boolean,
   errors: Array<string>
@@ -14,8 +14,8 @@ type InitialState = {
 const initialState: InitialState = {
   bots: [],
   loading: false,
-  loadingSavingIds: {},
-  loadingDeletingIds: {},
+  inSavingIds: [],
+  inDeletingIds: [],
   isCreating: false,
   loaded: false,
   errors: []

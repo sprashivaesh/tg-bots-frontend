@@ -20,8 +20,8 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
   const botId = parseInt(props.match.params.botId)
 
   const answers = useSelector((state: RootState) => state.autoAnswers.answers)
-  const loadingSavingIds = useSelector((state: RootState) => state.autoAnswers.loadingSavingIds)
-  const loadingDeletingIds = useSelector((state: RootState) => state.autoAnswers.loadingDeletingIds)
+  const inSavingIds = useSelector((state: RootState) => state.autoAnswers.inSavingIds)
+  const inDeletingIds = useSelector((state: RootState) => state.autoAnswers.inDeletingIds)
   const loading = useSelector((state: RootState) => state.autoAnswers.loading)
   const isCreating = useSelector((state: RootState) => state.autoAnswers.isCreating)
 
@@ -72,8 +72,8 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
                             onSubmit={onSubmit}
                             onDelete={onDelete}
                             id={autoAnswer.id}
-                            isSaving={!!loadingSavingIds[autoAnswer.id]}
-                            isDeleting={!!loadingDeletingIds[autoAnswer.id]}
+                            isSaving={inSavingIds.some(id=>id===autoAnswer.id)}
+                            isDeleting={inDeletingIds.some(id=>id===autoAnswer.id)}
                           />
                         ))}
                         {isCreating ?
@@ -85,7 +85,7 @@ const AutoAnswers: FC<RouteComponentProps<TParams>> = (props) => {
                             }}
                             onSubmit={onSubmit}
                             id={0}
-                            isSaving={!!loadingSavingIds[0]}
+                            isSaving={inSavingIds.some(id=>id===0)}
                           /> :
                           <div className="text-center">
                             <button className="btn btn-warning btn-sm" onClick={onCreate}>Добавить</button>

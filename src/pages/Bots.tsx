@@ -6,11 +6,12 @@ import bg from '../assets/images/city-profile.jpg'
 import BotEditForm from "../components/Forms/BotEditForm"
 import Spinner from "../components/Spinner"
 import {FormValues} from "../state/ducks/bots/types"
+import AutoAnswerForm from "../components/Forms/AutoAnswerForm";
 
 const Bots: FC = () => {
   const bots = useSelector((state: RootState) => state.bots.bots)
-  const loadingSavingIds = useSelector((state: RootState) => state.bots.loadingSavingIds)
-  const loadingDeletingIds = useSelector((state: RootState) => state.bots.loadingDeletingIds)
+  const inSavingIds = useSelector((state: RootState) => state.bots.inSavingIds)
+  const inDeletingIds = useSelector((state: RootState) => state.bots.inDeletingIds)
   const loading = useSelector((state: RootState) => state.bots.loading)
   const isCreating = useSelector((state: RootState) => state.bots.isCreating)
 
@@ -86,8 +87,8 @@ const Bots: FC = () => {
                             }}
                             onSubmit={onSubmit}
                             onDelete={onDelete}
-                            isSaving={!!loadingSavingIds[bot.id]}
-                            isDeleting={!!loadingDeletingIds[bot.id]}
+                            isSaving={inSavingIds.some(id=>id===bot.id)}
+                            isDeleting={inDeletingIds.some(id=>id===bot.id)}
                           />
                         ))}
                         {isCreating ?
@@ -99,7 +100,7 @@ const Bots: FC = () => {
                               token: ''
                             }}
                             onSubmit={onSubmit}
-                            isSaving={!!loadingSavingIds[0]}
+                            isSaving={inSavingIds.some(id=>id===0)}
                           /> :
                           <div className="text-center">
                             <button className="btn btn-warning btn-sm" onClick={onCreate} disabled={true}>Добавить</button>
