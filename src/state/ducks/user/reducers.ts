@@ -1,21 +1,15 @@
 import {User} from "./types";
 import {ActionsTypes} from "./actions";
 
-type InitialState = {
-  user: null | User
-  token: string
-  loading: boolean,
-  loaded: boolean,
-  errors: Array<string>
-}
-
-const initialState: InitialState = {
-  user: null,
-  token: localStorage.getItem('auth._token') || '',
+const initialState = {
+  user: null as null | User,
+  token: localStorage.getItem('auth._token') || '' as string,
   loading: false,
   loaded: false,
-  errors: []
-};
+  errors: [] as Array<string>
+}
+
+type InitialState = typeof initialState
 
 const signInReducer = (state = initialState, action: ActionsTypes): InitialState => {
   switch (action.type) {

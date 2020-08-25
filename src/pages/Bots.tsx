@@ -6,7 +6,6 @@ import bg from '../assets/images/city-profile.jpg'
 import BotEditForm from "../components/Forms/BotEditForm"
 import Spinner from "../components/Spinner"
 import {FormValues} from "../state/ducks/bots/types"
-import AutoAnswerForm from "../components/Forms/AutoAnswerForm";
 
 const Bots: FC = () => {
   const bots = useSelector((state: RootState) => state.bots.bots)

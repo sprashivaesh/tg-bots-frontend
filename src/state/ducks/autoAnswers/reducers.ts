@@ -1,27 +1,18 @@
 import {ActionsTypes} from "./actions"
 import {AutoAnswer} from "./types"
 
-type InitialState = {
-  answers: Array<AutoAnswer>,
-  // autoAnswer: AutoAnswer|null,
-  loading: boolean,
-  inSavingIds: Array<number>
-  inDeletingIds: Array<number>
-  isCreating: boolean
-  loaded: boolean,
-  errors: Array<string>
-}
-const initialState: InitialState = {
-  answers: [],
-  // autoAnswer: null,
+const initialState = {
+  answers: [] as Array<AutoAnswer>,
+  // autoAnswer: null as AutoAnswer|null,
   loading: false,
-  inSavingIds: [],
-  inDeletingIds: [],
+  inSavingIds: [] as Array<number>,
+  inDeletingIds: [] as Array<number>,
   isCreating: false,
   loaded: false,
-  errors: []
+  errors: [] as Array<string>
 };
 
+type InitialState = typeof initialState
 
 const botReducer = (state = initialState, action: ActionsTypes): InitialState => {
   switch (action.type) {

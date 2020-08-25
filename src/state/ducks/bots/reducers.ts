@@ -1,25 +1,17 @@
 import {ActionsTypes} from "./actions";
 import {Bot} from "./types";
 
-type InitialState = {
-  bots: Array<Bot>,
-  loading: boolean,
-  inSavingIds: Array<number>
-  inDeletingIds: Array<number>
-  isCreating: boolean
-  loaded: boolean,
-  errors: Array<string>
-}
-
-const initialState: InitialState = {
-  bots: [],
+const initialState = {
+  bots: [] as Array<Bot>,
   loading: false,
-  inSavingIds: [],
-  inDeletingIds: [],
+  inSavingIds: [] as Array<number>,
+  inDeletingIds: [] as Array<number>,
   isCreating: false,
   loaded: false,
-  errors: []
-};
+  errors: [] as Array<string>
+}
+
+type InitialState = typeof initialState
 
 const botReducer = (state = initialState, action: ActionsTypes):InitialState => {
   switch (action.type) {
