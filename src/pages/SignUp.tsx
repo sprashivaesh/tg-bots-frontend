@@ -8,7 +8,7 @@ import bg from '../assets/images/bg7.jpg'
 
 
 const SignUp = () => {
-  const signUpErrors = useSelector((state: RootState) => state.user.errors)
+  // const signUpErrors = useSelector((state: RootState) => state.user.errors)
   const dispatch = useDispatch();
 
   const schema = yup.object().shape({
@@ -104,7 +104,7 @@ const SignUp = () => {
                     </div>
                   </div>
                 </div>
-                {signUpErrors.map(err => (<div className="text-center text-danger" key={err}>{err}</div>))}
+                {/*{signUpErrors.map(err => (<div className="text-center text-danger" key={err}>{err}</div>))}*/}
                 <div className="card-footer justify-content-center">
                   <button className="btn btn-rose btn-link" type="submit">Погнали</button>
                 </div>
