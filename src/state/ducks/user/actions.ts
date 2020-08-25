@@ -6,6 +6,7 @@ import {InferActionsTypes, RootState} from "../../store";
 export const actions = {
   loginRequest: () => ({type: 'tg-bots/user/LOGIN_REQUEST'} as const),
   loginSuccess: (data: any) => ({type: 'tg-bots/user/LOGIN_SUCCESS', payload: {...data}} as const),
+  loginFailure: (err: any) => ({type: 'tg-bots/user/LOGIN_FAILURE', payload: {err}} as const),
   meSuccess: (data: any) => ({type: 'tg-bots/user/ME_SUCCESS', payload: {...data}} as const),
   signUpRequest: () => ({type: 'tg-bots/user/SIGN_UP_REQUEST'} as const),
   logout: () => ({type: 'tg-bots/user/LOGOUT'} as const),
@@ -14,6 +15,41 @@ export const actions = {
 
 export type ActionsTypes = InferActionsTypes<typeof actions>
 type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
+
+const  errorsFormatter = function (e:any):Array<string> {
+  const {message} = e.response.data
+  const errors = []
+  if (message && message[0] && message[0].messages && message[0].messages[0]) {
+    const errorId = message[0].messages[0].id
+    switch (errorId) {
+      case 'Auth.form.error.confirmed':
+        errors.push('Ваш e-mail адрес не подтвержден')
+        break
+      case 'Auth.form.error.invalid':
+        errors.push('Имя пользователя, e-mail или пароль неверны')
+        break
+      case 'Auth.form.error.email.provide':
+        errors.push('Пожалуйста укажите имя пользователя или e-mail')
+        break
+      case 'Auth.form.error.blocked':
+        errors.push('Ваша учетная запись была заблокирована администратором')
+        break
+      case 'Auth.form.error.ratelimit':
+        errors.push('Слишком много попыток, повторите попытку через минуту')
+        break
+      case 'Auth.form.error.email.taken':
+        errors.push('Пользователь с таким e-mail уже зарегистрирован')
+        break
+      case 'Auth.form.error.username.taken':
+        errors.push('Имя пользователя уже занято')
+        break
+      default:
+        errors.push('Ошибка регистрации')
+    }
+  }
+  return errors
+}
+
 
 export const loginWith = (form: LoginForm, provider?: Provider): ThunkAT => async (dispatch) => {
   dispatch(actions.loginRequest())
@@ -30,7 +66,9 @@ export const loginWith = (form: LoginForm, provider?: Provider): ThunkAT => asyn
     localStorage.setItem('auth._token', data.jwt)
     dispatch(actions.loginSuccess(data))
   } catch (e) {
-    console.log(e)
+    const errors = errorsFormatter(e)
+    console.log(errors)
+    // dispatch(actions.loginFailure(e))
   }
 }
 export const getUserData = (): ThunkAT => async (dispatch) => {
@@ -45,35 +83,7 @@ export const signUp = (form: SignUpForm): ThunkAT => async (dispatch) => {
     dispatch(actions.loginSuccess(data))
     dispatch(actions.meSuccess(data.user))
   } catch (e) {
-    const {message} = e.response.data
-    const errors = []
-    if (message && message[0] && message[0].messages && message[0].messages[0]) {
-      switch (message[0].messages[0].id) {
-        case 'Auth.form.error.confirmed':
-          errors.push('Ваш e-mail адрес не подтвержден')
-          break
-        case 'Auth.form.error.invalid':
-          errors.push('Имя пользователя, e-mail или пароль неверны')
-          break
-        case 'Auth.form.error.email.provide':
-          errors.push('Пожалуйста укажите имя пользователя или e-mail')
-          break
-        case 'Auth.form.error.blocked':
-          errors.push('Ваша учетная запись была заблокирована администратором')
-          break
-        case 'Auth.form.error.ratelimit':
-          errors.push('Слишком много попыток, повторите попытку через минуту')
-          break
-        case 'Auth.form.error.email.taken':
-          errors.push('Пользователь с таким e-mail уже зарегистрирован')
-          break
-        case 'Auth.form.error.username.taken':
-          errors.push('Имя пользователя уже занято')
-          break
-        default:
-          errors.push('Ошибка регистрации')
-      }
-    }
+    const errors = errorsFormatter(e)
     dispatch(actions.signUpFailure(errors))
   }
 }

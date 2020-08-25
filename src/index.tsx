@@ -1,35 +1,20 @@
-import React, {useEffect, FC, PropsWithChildren} from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from "react-redux"
-import {BrowserRouter, useLocation} from "react-router-dom"
-import store from "./state/store";
+import {BrowserRouter} from "react-router-dom"
+import store from "./state/store"
 
-import Navbar from "./components/Navbar"
-import Footer from "./components/Footer"
-
-import App from "./routes"
+import App from "./app"
 import * as serviceWorker from './serviceWorker'
 import './styles/material-kit.css'
 import './styles/index.css'
 
 
-const ScrollToTop: FC<PropsWithChildren<any>> = (props) => {
-  const {pathname} = useLocation()
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
-  return props.children
-}
-
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <ScrollToTop>
-        <Navbar/>
         <App/>
-        <Footer/>
-      </ScrollToTop>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
