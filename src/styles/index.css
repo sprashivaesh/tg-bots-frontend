@@ -24,6 +24,10 @@ li.show > .show-dropdown-menu {
 }
 
 
+.card-login .form {
+  min-height: auto;
+}
+
 
 .spinner {
   /* Spinner size and color */
