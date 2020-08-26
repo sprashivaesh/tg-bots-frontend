@@ -13,9 +13,9 @@ type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 export const addNotification = (notificationValues: NotificationValues): ThunkAT => async (dispatch) => {
   const notification = {...notificationValues, id: Date.now()}
   dispatch(actions.addNotification(notification))
-  setTimeout( ()=>{
-    dispatch(actions.removeNotification(notification.id))
-  }, 3000)
+  const ms = 3000
+  await new Promise(resolve => setTimeout(resolve, ms))
+  dispatch(actions.removeNotification(notification.id))
 }
 export const removeNotification = (id: number): ThunkAT => async (dispatch) => {
   dispatch(actions.removeNotification(id))
