@@ -1,33 +1,30 @@
 import React from "react"
-import {useSelector, useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {signUp} from "../state/ducks/user/actions"
-import {RootState} from "../state/store"
 import {useFormik} from "formik"
 import bg from '../assets/images/bg7.jpg'
 
 
 const SignUp = () => {
-  // const signUpErrors = useSelector((state: RootState) => state.user.errors)
   const dispatch = useDispatch();
 
-  const schema = yup.object().shape({
+  const validationSchema = yup.object().shape({
     username: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Имя пользователя не указано'),
     email: yup.string().email('Укажите валидный Email').required('Email не указан'),
     password: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
-  });
-
+  })
   const form = useFormik({
     initialValues: {
       username: '',
       email: '',
       password: ''
     },
-    validationSchema: schema,
+    validationSchema,
     onSubmit: (values) => {
       dispatch(signUp(values))
     },
-  });
+  })
 
   return (
     <div className="page-header header-filter"
@@ -50,7 +47,6 @@ const SignUp = () => {
                     </div>
                     <div className="flex-auto">
                       <input
-                        id="usernameInput"
                         className="form-control"
                         type="text"
                         placeholder="Имя пользователя"
@@ -59,7 +55,7 @@ const SignUp = () => {
                         onBlur={form.handleBlur}
                       />
                       {form.touched.username && form.errors.username && (
-                        <label htmlFor="usernameInput" className="bmd-label-floating">{form.errors.username}</label>)}
+                        <span className="bmd-label-floating">{form.errors.username}</span>)}
                     </div>
                   </div>
                   <div className={`input-group${form.touched.email && form.errors.email ? ' has-danger' : ''}`}>
@@ -71,7 +67,6 @@ const SignUp = () => {
                     <div className="flex-auto">
                       <input
                         className="form-control"
-                        id="emailInput"
                         type="text"
                         placeholder="Email"
                         name="email"
@@ -79,7 +74,7 @@ const SignUp = () => {
                         onBlur={form.handleBlur}
                       />
                       {form.touched.email && form.errors.email && (
-                        <label htmlFor="emailInput" className="bmd-label-floating">{form.errors.email}</label>)}
+                        <span className="bmd-label-floating">{form.errors.email}</span>)}
                     </div>
                   </div>
                   <div
@@ -92,7 +87,6 @@ const SignUp = () => {
                     <div className="flex-auto">
                       <input
                         className="form-control"
-                        id="passwordInput"
                         type="text"
                         placeholder="Пароль"
                         name="password"
@@ -100,11 +94,10 @@ const SignUp = () => {
                         onBlur={form.handleBlur}
                       />
                       {form.touched.password && form.errors.password && (
-                        <label htmlFor="passwordInput" className="bmd-label-floating">{form.errors.password}</label>)}
+                        <span className="bmd-label-floating">{form.errors.password}</span>)}
                     </div>
                   </div>
                 </div>
-                {/*{signUpErrors.map(err => (<div className="text-center text-danger" key={err}>{err}</div>))}*/}
                 <div className="card-footer justify-content-center">
                   <button className="btn btn-rose btn-link" type="submit">Погнали</button>
                 </div>
