@@ -4,8 +4,6 @@ import * as yup from 'yup'
 import {signUp} from "../state/ducks/user/actions"
 import bg from '../assets/images/bg7.jpg'
 import Form from "../components/Forms/Form";
-import {Link} from "react-router-dom";
-
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -17,7 +15,6 @@ const SignUp = () => {
     email: yup.string().email('Укажите валидный email').required('Email не указан'),
     password: yup.string().min(4, 'Минимум 4 символов').max(20, 'Максимум 20 символов').required('Пароль не указан'),
   })
-
 
   const fields: any = [
     {
@@ -52,9 +49,6 @@ const SignUp = () => {
               </div>
               <div className="card-body">
                 <Form submitBtnText="Погнали" validationSchema={validationSchema} onSubmit={onSubmit} fields={fields}/>
-                <div className="text-center mb-4">
-                  Нет аккаунта? <Link to={{pathname: '/sign_up'}}>Зарегистрируйтесь</Link>
-                </div>
               </div>
             </div>
           </div>
