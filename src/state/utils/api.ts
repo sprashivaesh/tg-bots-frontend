@@ -1,5 +1,8 @@
 import axios from 'axios'
-import store from "../store"
+import store, {RootState} from "../store"
+import {ActionsTypes, logout} from "../ducks/user/actions";
+import {ThunkDispatch} from "redux-thunk";
+
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -23,7 +26,15 @@ export default (method: MethodType, url: string, data?: any): Promise<any> => {
     method,
     url,
     data
-  }).then(res => res.data)
+  })
+    .then(res => res.data)
+    .catch(err => {
+      const dispatch: ThunkDispatch<RootState, any, ActionsTypes> = store.dispatch
+      if (err?.response?.data?.statusCode === 401) {
+        dispatch(logout())
+      }
+      return Promise.reject(err)
+    })
 }
 
 
