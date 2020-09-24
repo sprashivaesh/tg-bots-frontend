@@ -82,7 +82,8 @@ const Bots: FC = () => {
                             values={{
                               allowedChatsId: bot.allowedChatsId,
                               enable: bot.enable,
-                              token: bot.token
+                              token: bot.token,
+                              name: bot.name
                             }}
                             onSubmit={onSubmit}
                             onDelete={onDelete}
@@ -96,7 +97,8 @@ const Bots: FC = () => {
                             values={{
                               allowedChatsId: [],
                               enable: false,
-                              token: ''
+                              token: '',
+                              name: ''
                             }}
                             onSubmit={onSubmit}
                             isSaving={inSavingIds.some(id=>id===0)}

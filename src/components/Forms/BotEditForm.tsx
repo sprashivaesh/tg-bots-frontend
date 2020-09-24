@@ -17,7 +17,8 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
     initialValues: {
       allowedChatsId: values.allowedChatsId,
       enable: values.enable,
-      token: values.token
+      token: values.token,
+      name: values.name
     },
     onSubmit: (values) => onSubmit(id, values)
   })
@@ -44,6 +45,19 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
         </div>
         <div className="col-12 form-group label-floating">
           <label className="form-control-label bmd-label-floating" htmlFor={'token' + id}>
+            Имя бота
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            name="name"
+            id={'name' + id}
+            onChange={form.handleChange}
+            value={form.values.name}
+          />
+        </div>
+        <div className="col-12 form-group label-floating">
+          <label className="form-control-label bmd-label-floating" htmlFor={'token' + id}>
             Токен бота
           </label>
           <input
@@ -55,9 +69,9 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
             value={form.values.token}
           />
         </div>
-        <div className="col-12">
-          {JSON.stringify(form.values.allowedChatsId)}
-        </div>
+        {/*<div className="col-12">*/}
+        {/*  {JSON.stringify(form.values.allowedChatsId)}*/}
+        {/*</div>*/}
         {/*<div className="col-12 col-lg-5 form-group label-floating">*/}
         {/*  <label className="form-control-label bmd-label-floating" htmlFor={'answersTextarea'+id}>*/}
         {/*    Фразы, которые бот будет отвечать, каждая с новой строки, для фраз с переносом строк используйте <b>\n</b>*/}
