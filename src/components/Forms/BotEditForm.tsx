@@ -54,6 +54,7 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
             id={'name' + id}
             onChange={form.handleChange}
             value={form.values.name}
+            disabled={true}
           />
         </div>
         <div className="col-12 form-group label-floating">
@@ -67,6 +68,7 @@ const BotEditForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDel
             id={'token' + id}
             onChange={form.handleChange}
             value={form.values.token}
+            disabled={true}
           />
         </div>
         {/*<div className="col-12">*/}
