@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react"
+import React, {FC, useCallback, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {getBots} from "../state/ducks/bots/actions"
 import {RootState} from "../state/store"
@@ -16,9 +16,13 @@ const Bots: FC = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const initFetch = useCallback(() => {
     dispatch(getBots())
-  }, [dispatch])
+  }, [dispatch]);
+
+  useEffect(() => {
+    initFetch();
+  }, [initFetch]);
 
   const onCreate = () => {
     // dispatch(setIsCreatingBot())

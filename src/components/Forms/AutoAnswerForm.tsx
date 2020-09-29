@@ -1,36 +1,53 @@
-import React, {FC} from "react"
+import React, {FC, useMemo} from "react"
 import {useFormik} from "formik"
-import {FormValues} from "../../state/ducks/autoAnswers/types"
+import {AutoAnswer, FormValues} from "../../state/ducks/autoAnswers/types"
 import * as yup from 'yup'
 import classNames from 'classnames'
 
 
 type Props = {
-  values: FormValues
+  autoAnswer?: AutoAnswer
   onSubmit: (id: number, values: FormValues) => void
-  id: number
   isSaving: boolean
   onDelete?: (id: number) => void
   isDeleting?: boolean
 }
-
-const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, isDeleting}) => {
+const AutoAnswerForm: FC<Props> = React.memo(({autoAnswer, onSubmit, onDelete, isSaving, isDeleting}) => {
   const schema = yup.object().shape({
     private: yup.boolean(),
     coincidences: yup.string().required('Обязательное поле'),
     answers: yup.string().required('Обязательное поле')
   });
+  const id = autoAnswer?.id ?? 0
+
+  const values: FormValues = autoAnswer ?
+    {
+      private: autoAnswer.private,
+      coincidences: autoAnswer.coincidences,
+      answers: autoAnswer.answers
+    }
+    :
+    {
+      private: false,
+      coincidences: '',
+      answers: ''
+    }
   const form = useFormik({
     initialValues: {
       private: values.private,
       coincidences: values.coincidences,
       answers: values.answers
     },
-    validationSchema: schema,
+    // validationSchema: schema,
     onSubmit: (values) => onSubmit(id, values)
   })
+  console.log('render')
+  // console.log(form.dirty)
+  // console.log(form.values)
+  // console.log(values)
 
-  const inProgress = isSaving || !!isDeleting
+  const inProgress = useMemo(() => (isSaving || !!isDeleting),
+    [isSaving, isDeleting])
 
   // console.log(id)
   // console.log(form.dirty)
@@ -108,5 +125,5 @@ const AutoAnswerForm: FC<Props> = ({values, id, onSubmit, onDelete, isSaving, is
       </div>
     </form>
   )
-}
+})
 export default AutoAnswerForm
