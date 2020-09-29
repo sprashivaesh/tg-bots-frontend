@@ -12,37 +12,32 @@ type Props = {
   onDelete?: (id: number) => void
   isDeleting?: boolean
 }
-const AutoAnswerForm: FC<Props> = React.memo(({autoAnswer, onSubmit, onDelete, isSaving, isDeleting}) => {
-  const schema = yup.object().shape({
-    private: yup.boolean(),
-    coincidences: yup.string().required('Обязательное поле'),
-    answers: yup.string().required('Обязательное поле')
-  });
-  const id = autoAnswer?.id ?? 0
 
-  const values: FormValues = autoAnswer ?
-    {
-      private: autoAnswer.private,
-      coincidences: autoAnswer.coincidences,
-      answers: autoAnswer.answers
-    }
-    :
-    {
-      private: false,
-      coincidences: '',
-      answers: ''
-    }
+const schema = yup.object().shape({
+  private: yup.boolean(),
+  coincidences: yup.string().required('Обязательное поле'),
+  answers: yup.string().required('Обязательное поле')
+});
+
+const AutoAnswerForm: FC<Props> = React.memo(({autoAnswer, onSubmit, onDelete, isSaving, isDeleting}) => {
+  const id = autoAnswer?.id ?? 0
+  const values: FormValues = {
+    private: autoAnswer?.private ?? false,
+    coincidences: autoAnswer?.coincidences ?? '',
+    answers: autoAnswer?.answers ?? ''
+  }
   const form = useFormik({
     initialValues: {
       private: values.private,
       coincidences: values.coincidences,
       answers: values.answers
     },
-    // validationSchema: schema,
+    enableReinitialize: true,
+    validationSchema: schema,
     onSubmit: (values) => onSubmit(id, values)
   })
-  console.log('render')
-  // console.log(form.dirty)
+  // console.log('render')
+  console.log(form.dirty)
   // console.log(form.values)
   // console.log(values)
 
