@@ -18,9 +18,12 @@ export type ActionsTypes = InferActionsTypes<typeof actions>
 type ThunkAT = ThunkAction<Promise<void>, RootState, any, ActionsTypes>
 
 const errorsFormatter = function (e: any): Array<string> {
-  const {message} = e.response.data
-  const errors = []
-  if (message && message[0] && message[0].messages && message[0].messages[0]) {
+  const errors: Array<string> = []
+  const message = e?.response?.data?.message
+
+  if (!message) return errors
+
+  if (message?.[0]?.messages?.[0]?.id) {
     const errorId = message[0].messages[0].id
     switch (errorId) {
       case 'Auth.form.error.confirmed':
@@ -75,7 +78,7 @@ export const getUserData = (): ThunkAT => async (dispatch) => {
   try {
     const data = await userApi.getUserData()
     dispatch(actions.meSuccess(data))
-  } catch (e){
+  } catch (e) {
     const errors = errorsFormatter(e)
     errors.forEach(message => (dispatch(addNotification({type: 'danger', message}))))
   }

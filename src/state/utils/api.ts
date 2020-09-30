@@ -2,6 +2,7 @@ import axios from 'axios'
 import store, {RootState} from "../store"
 import {ActionsTypes, logout} from "../ducks/user/actions";
 import {ThunkDispatch} from "redux-thunk";
+import {addNotification} from "../ducks/notifications/actions";
 
 
 const baseURL = process.env.REACT_APP_BASE_URL
@@ -30,7 +31,11 @@ export default (method: MethodType, url: string, data?: any): Promise<any> => {
     .then(res => res.data)
     .catch(err => {
       const dispatch: ThunkDispatch<RootState, any, ActionsTypes> = store.dispatch
+      if (!err?.response) {
+        dispatch(addNotification({type: 'danger', message: 'Ошибка сервера'}))
+      }
       if (err?.response?.data?.statusCode === 401) {
+        dispatch(addNotification({type: 'danger', message: 'Ошибка авторизации'}))
         dispatch(logout())
       }
       return Promise.reject(err)
