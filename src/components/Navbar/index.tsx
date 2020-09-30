@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {logout} from '../../state/ducks/user/actions'
 import {useDispatch, useSelector} from 'react-redux'
@@ -12,31 +12,31 @@ const Navbar: FC = () => {
 
 
   const [isSticky, setSticky] = useState(false)
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     setSticky(window.scrollY > 0)
-  }
+  }, [])
 
 
   const navRef = useRef<any>()
-  const onToggleNavbar = () => {
+  const onToggleNavbar = useCallback(() => {
     navRef.current.classList.toggle('nav-open')
-  }
-  const onClickOutsideNavbar = (e: any) => {
-    if (navRef.current && !navRef.current.contains(e.target)) {
+  },[])
+  const onClickOutsideNavbar = useCallback((e: any) => {
+    if (!navRef?.current.contains(e.target)) {
       navRef.current.classList.remove('nav-open')
     }
-  }
+  }, [])
 
 
   const userMenuRef = useRef<any>()
-  const onToggleUserMenu = () => {
+  const onToggleUserMenu = useCallback(() => {
     userMenuRef.current.classList.toggle('show')
-  }
-  const onClickOutsideUserMenu = (e: any) => {
-    if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+  }, [])
+  const onClickOutsideUserMenu = useCallback((e: any) => {
+    if (!userMenuRef?.current.contains(e.target)) {
       userMenuRef.current.classList.remove('show')
     }
-  }
+  }, [])
 
 
   useEffect(() => {
@@ -48,12 +48,12 @@ const Navbar: FC = () => {
       document.removeEventListener('mouseup', onClickOutsideNavbar)
       document.removeEventListener('mouseup', onClickOutsideUserMenu)
     }
-  }, [])
+  }, [handleScroll, onClickOutsideNavbar, onClickOutsideUserMenu])
 
 
-  const onLogout = () => {
+  const onLogout = useCallback(() => {
     dispatch(logout())
-  }
+  }, [dispatch])
 
   return (
     <nav ref={navRef}
@@ -71,7 +71,7 @@ const Navbar: FC = () => {
         </div>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ml-auto">
-            {user ? (
+            {user && (
               <li className="dropdown nav-item" ref={userMenuRef} onClick={onToggleUserMenu}>
                 <span className="dropdown-toggle nav-link pointer">{user.username}</span>
                 <div className={'dropdown-menu dropdown-with-icons show-dropdown-menu'}>
@@ -79,12 +79,16 @@ const Navbar: FC = () => {
                   <span className="dropdown-item pointer" onClick={onLogout}>Выйти</span>
                 </div>
               </li>
-            ) : ''}
+            )}
             <li className="button-container nav-item iframe-extern">
-              {isAuthentificated ? '' :
-                (<Link className="btn btn-rose btn-round btn-block" to={{pathname: '/sign_in'}}>
-                  <i className="fa fa-sign-in"/> Войти
-                </Link>)}
+              {!isAuthentificated &&
+              (<Link className="btn btn-rose btn-round btn-block" to={{pathname: '/sign_in'}}>
+                <i className="fa fa-sign-in"/> Войти
+              </Link>)}
+              {isAuthentificated && !user &&
+                (<button className="btn btn-rose btn-round btn-block" onClick={onLogout}>
+                <i className="fa fa-sign-in"/> Выйти
+                </button>)}
             </li>
           </ul>
         </div>
