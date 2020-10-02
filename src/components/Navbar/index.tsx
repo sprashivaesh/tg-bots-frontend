@@ -22,7 +22,7 @@ const Navbar: FC = () => {
     navRef.current.classList.toggle('nav-open')
   },[])
   const onClickOutsideNavbar = useCallback((e: any) => {
-    if (!navRef?.current.contains(e.target)) {
+    if (navRef?.current && !navRef?.current.contains(e.target)) {
       navRef.current.classList.remove('nav-open')
     }
   }, [])
@@ -33,7 +33,7 @@ const Navbar: FC = () => {
     userMenuRef.current.classList.toggle('show')
   }, [])
   const onClickOutsideUserMenu = useCallback((e: any) => {
-    if (!userMenuRef?.current.contains(e.target)) {
+    if (userMenuRef?.current && !userMenuRef.current.contains(e.target)) {
       userMenuRef.current.classList.remove('show')
     }
   }, [])

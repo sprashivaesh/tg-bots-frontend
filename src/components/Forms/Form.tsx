@@ -2,7 +2,7 @@ import React, {FC} from "react"
 import {useFormik} from "formik";
 import classNames from "classnames"
 
-type FieldModel = {
+export type FieldModel = {
   type: 'text' | 'password'
   name: string
   placeholder: string
@@ -14,10 +14,11 @@ type Props = {
   validationSchema: any
   submitBtnText: string
   onSubmit: (values:any)=>void
+  loading?: boolean
 }
 
 
-const Form: FC<Props> = ({fields, validationSchema, submitBtnText,onSubmit}) => {
+const Form: FC<Props> = ({fields, validationSchema, submitBtnText,onSubmit, loading}) => {
   const initialValues: any = {}
   fields.forEach(field=>{
     initialValues[field.name] = ''
@@ -49,7 +50,9 @@ const Form: FC<Props> = ({fields, validationSchema, submitBtnText,onSubmit}) => 
         </div>
       ))}
       <div className="text-center">
-        <button type="submit" className="btn btn-rose btn-link">{submitBtnText}</button>
+        <button type="submit" className={classNames('btn',{'btn-rose': !loading}, 'btn-link')} disabled={loading}>
+          {submitBtnText}
+        </button>
       </div>
     </form>
   )
